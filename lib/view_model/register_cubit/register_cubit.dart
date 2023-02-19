@@ -36,10 +36,7 @@ class RegisterCubit extends Cubit<RegisterState> {
   //   emit(RegisterSuccessState());
   // }
 
-bool isSecured=false;
-Color color=AppTheme.grey;
-
-
+bool isSecured=true;
 void showPassword(bool isSec){
   isSecured = isSec;
   emit(ChangePasswordState());

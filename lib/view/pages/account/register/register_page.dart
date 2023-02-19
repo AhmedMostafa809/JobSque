@@ -20,6 +20,19 @@ final formKey = GlobalKey<FormState>();
 late Color color;
 // bool isSecured = true;
 bool flag=true;
+bool changeButtonColor(String c1, String c2, String c3) {
+  if (c1.isEmpty || c2.isEmpty || c3.isEmpty) {
+    color = AppTheme.grey;
+    flag=false;
+  } else {
+    color = AppTheme.primaryColor;
+    flag=true;
+  }
+
+  return flag;
+}
+
+
 class RegisterPage extends StatefulWidget {
   const RegisterPage({Key? key}) : super(key: key);
 
@@ -28,17 +41,6 @@ class RegisterPage extends StatefulWidget {
 }
 
 class _RegisterPageState extends State<RegisterPage> {
-  bool changeButtonColor(String c1, String c2, String c3) {
-    if (c1.isEmpty || c2.isEmpty || c3.isEmpty) {
-      color = AppTheme.grey;
-      flag=false;
-    } else {
-      color = AppTheme.primaryColor;
-      flag=true;
-    }
-
-      return flag;
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -49,7 +51,7 @@ class _RegisterPageState extends State<RegisterPage> {
         return Scaffold(
           backgroundColor: Colors.white,
           appBar: AppBar(
-            backgroundColor: Colors.white,
+            backgroundColor: Colors.transparent,
             elevation: 0,
             leading: const Icon(
               Icons.arrow_back,
@@ -99,13 +101,7 @@ class _RegisterPageState extends State<RegisterPage> {
 
                           });
                         },
-                        validator: (p0) {
-                          if (p0 == null ) {
-                            return 'Password must be at least 8 characters';
-                          } else {
-                            return null;
-                          }
-                        },
+
 
                         obSecured: false,
                         textInputAction: TextInputAction.next,
@@ -119,6 +115,7 @@ class _RegisterPageState extends State<RegisterPage> {
                         height: 20,
                       ),
                       DefaultFormField(
+
                         obSecured: false,
 
                         onChanged: (p0) {
@@ -162,8 +159,11 @@ class _RegisterPageState extends State<RegisterPage> {
                         suffixIcon: IconButton(
                             onPressed: () {
                               registerCubit.isSecured == true
-                                  ? registerCubit.showPassword(false)
-                                  : registerCubit.showPassword(true);
+                                  ?registerCubit.showPassword(false)
+                                  :registerCubit.showPassword(true);
+                              setState(() {
+
+                              });
                             },
                             icon: registerCubit.isSecured == true
                                 ? Icon(Icons.visibility_off,
@@ -206,7 +206,7 @@ class _RegisterPageState extends State<RegisterPage> {
                               ),
                               recognizer: TapGestureRecognizer()
                                 ..onTap = () {
-                                  // navigate to desired screen
+                                  Navigator.pushNamedAndRemoveUntil(context, AppRoutes.LoginPageRoute, (route) => false);
                                 })
                         ]),
                   ),
@@ -217,7 +217,7 @@ class _RegisterPageState extends State<RegisterPage> {
                 DefaultButton(
                     Onpressed:flag==false? (){}:() {
                       if (formKey.currentState!.validate()) {
-                        Navigator.pushNamed(context, AppRoutes.jobsPageRoute);
+                        Navigator.pushNamed(context, AppRoutes.LoginPageRoute);
                       }
 
                       },
@@ -244,7 +244,7 @@ class _RegisterPageState extends State<RegisterPage> {
                         endIndent: 20,
                       ),
                     ),
-                    Text("Or Login With Account",
+                    Text("Or Sign up With Account",
                         style: TextStyle(
                             fontSize: 14,
                             fontWeight: FontWeight.w400,

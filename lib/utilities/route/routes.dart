@@ -5,5 +5,8 @@ class AppRoutes {
       registerPageRoute = "registerScreen",
       jobsPageRoute = "jobsScreen",
       RegisterSuccessPageRoute = "RegisterSuccessScreen",
+      LoginPageRoute='LoginPaeg',restPasswordPageRoute='ResetPasswordScreen',
+      checkEmaailPageRoute='checkEmailScreen',
+      createNewPasswordPageRoute='createNewPasswordScreen',
       locationPageRoute = "locationScreen";
 }

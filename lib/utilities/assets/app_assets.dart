@@ -26,6 +26,9 @@ class Img {
   static const String singaphor = 'assets/sin.png';
   static const String vitnam = 'assets/vitnam.png';
 static const String registerSuccess = 'assets/Success Account Ilustration.png';
+static const String resetSuccess = 'assets/Password Succesfully Ilustration.png';
+static const String checkEmail = 'assets/Email Ilustration.png';
+static const String resetSucceeded = 'assets/Password Succesfully Ilustration.png';
 
 
 }
