@@ -3,5 +3,7 @@ class AppRoutes {
       onBoardingRoute = "OnBoardingScreen",
       loginRoute = "LoginScreen",
       registerPageRoute = "registerScreen",
-  jobsPageRoute="jobsScreen";
+      jobsPageRoute = "jobsScreen",
+      RegisterSuccessPageRoute = "RegisterSuccessScreen",
+      locationPageRoute = "locationScreen";
 }

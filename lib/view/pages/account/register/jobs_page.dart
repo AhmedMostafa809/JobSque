@@ -42,13 +42,13 @@ class JobsPage extends StatelessWidget {
                   fontWeight: FontWeight.w400,
                   color: AppTheme.grey),
             ),
-            const SizedBox(
-              height: 60,
+             SizedBox(
+              height: 2.h,
             ),
             Expanded(
               child: GridView.builder(
                 physics: BouncingScrollPhysics(),
-                padding: const EdgeInsets.symmetric(horizontal: 1),
+                padding:  EdgeInsets.symmetric(horizontal: 1.w),
                 gridDelegate:  SliverGridDelegateWithFixedCrossAxisCount(crossAxisCount: 2),
                 itemCount: 6,itemBuilder: (context, index) {
                   return InkWell(
@@ -62,18 +62,25 @@ class JobsPage extends StatelessWidget {
               ),
             ),
 
-            Padding(
-              padding: const EdgeInsets.all(8.0),
-              child: DefaultButton(
-                Onpressed:()=> Navigator.pushNamedAndRemoveUntil(context, AppRoutes.registerPageRoute, (route) => false),
-                text:  "Next" ,
-                Height: 7.h,
-                width: 90.w,
-                clr: AppTheme.primaryColor,
-              ),
-            ),
+
           ],
         ),
+      ),
+      bottomSheet: Row(
+        mainAxisAlignment: MainAxisAlignment.center,
+
+        children: [
+          Padding(
+            padding:  EdgeInsets.symmetric(vertical: 8.0),
+            child: DefaultButton(
+              Onpressed: () => Navigator.pushNamed(context, AppRoutes.locationPageRoute),
+              text: "Next",
+              Height: 7.h,
+              width: 90.w,
+              clr: AppTheme.primaryColor,
+            ),
+          ),
+        ],
       ),
     );
   }

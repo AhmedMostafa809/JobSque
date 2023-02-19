@@ -2,6 +2,8 @@
 
 import 'package:final_project/utilities/route/routes.dart';
 import 'package:final_project/view/pages/account/register/jobs_page.dart';
+import 'package:final_project/view/pages/account/register/location_page.dart';
+import 'package:final_project/view/pages/account/register/register_success.dart';
 import 'package:flutter/material.dart';
 
 import '../../view/pages/account/login_page.dart';
@@ -15,6 +17,12 @@ Route<dynamic> onGenerate(RouteSettings routeSettings) {
     case AppRoutes.splashPageRoute:
       return MaterialPageRoute(
           builder: (context) => const SplashScreen(), settings: routeSettings);
+    case AppRoutes.locationPageRoute:
+      return MaterialPageRoute(
+          builder: (context) => const LocationPage(), settings: routeSettings);
+    case AppRoutes.RegisterSuccessPageRoute:
+      return MaterialPageRoute(
+          builder: (context) => const RegisterSuccessPage(), settings: routeSettings);
     case AppRoutes.jobsPageRoute:
       return MaterialPageRoute(
           builder: (context) => const JobsPage(), settings: routeSettings);
