@@ -176,7 +176,7 @@ class _CreateNewPasswordState extends State<CreateNewPassword> {
                 child: DefaultButton(
                     Onpressed: () {
                       if (resetFormKey.currentState!.validate()) {
-                        Navigator.push(context, MaterialPageRoute(builder: (context) => ResetSucceededPage()));
+                        Navigator.pushNamed(context, AppRoutes.resetSucceededRoute);
                       }
 
                     },

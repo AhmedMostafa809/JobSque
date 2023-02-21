@@ -23,8 +23,9 @@ class ResetPasswordPage extends StatelessWidget {
         appBar: AppBar(
         backgroundColor: Colors.transparent,
         elevation: 0,
-        leading: const Icon(
-        Icons.arrow_back,
+        leading:  IconButton(
+          onPressed: ()=> Navigator.pop(context),
+        icon: Icon(Icons.arrow_back),
         color: AppTheme.grey,
     ),
           actions: [
@@ -58,6 +59,7 @@ class ResetPasswordPage extends StatelessWidget {
             ),
             SizedBox(height: 5.h,),
             DefaultFormField(
+
               controller: emailController,
               textInputAction: TextInputAction.next,
               keyboardType: TextInputType.emailAddress,
@@ -96,10 +98,10 @@ class ResetPasswordPage extends StatelessWidget {
             ),
 
             Padding(
-              padding: const EdgeInsets.all(8.0),
+              padding: const EdgeInsets.symmetric(vertical: 10.0),
               child: DefaultButton(
                   Onpressed: (){
-                    Navigator.pushNamedAndRemoveUntil(context, AppRoutes.checkEmaailPageRoute, (route) => false);
+                    Navigator.pushNamed(context, AppRoutes.checkEmaailPageRoute);
                   },
                   text: 'Request password reset',
                   clr:  AppTheme.primaryColor,

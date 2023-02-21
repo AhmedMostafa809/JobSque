@@ -28,7 +28,7 @@ class ResetSucceededPage extends StatelessWidget {
                 height: 30.h,
               ),
               SizedBox(height: 5.h,),
-              Text(
+              const Text(
                 "Password changed succesfully!",
                 textAlign: TextAlign.center,
                 style: TextStyle(fontSize: 24, fontWeight: FontWeight.w500),
@@ -54,8 +54,7 @@ class ResetSucceededPage extends StatelessWidget {
           Padding(
             padding: const EdgeInsets.all(8.0),
             child: DefaultButton(
-              Onpressed: () => Navigator.pushNamed(
-                  context, AppRoutes.createNewPasswordPageRoute),
+              Onpressed: () => Navigator.pushNamedAndRemoveUntil(context, AppRoutes.loginRoute, (route) => false),
               text: "Open email app",
               Height: 7.h,
               width: 90.w,

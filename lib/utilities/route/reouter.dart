@@ -7,6 +7,8 @@ import 'package:final_project/view/pages/account/register/register_success.dart'
 import 'package:final_project/view/pages/account/reset_password/check_email.dart';
 import 'package:final_project/view/pages/account/reset_password/create_new_password.dart';
 import 'package:final_project/view/pages/account/reset_password/reset_password_page.dart';
+import 'package:final_project/view/pages/account/reset_password/reset_successfully.dart';
+import 'package:final_project/view/pages/home_screen.dart';
 import 'package:flutter/material.dart';
 
 import '../../view/pages/account/login_page.dart';
@@ -16,6 +18,7 @@ import '../../view/pages/splach_page.dart';
 
 
 Route<dynamic> onGenerate(RouteSettings routeSettings) {
+
   switch (routeSettings.name) {
     case AppRoutes.splashPageRoute:
       return MaterialPageRoute(
@@ -44,6 +47,14 @@ Route<dynamic> onGenerate(RouteSettings routeSettings) {
     case AppRoutes.onBoardingRoute:
       return MaterialPageRoute(
           builder: (context) => const OnBoarding(), settings: routeSettings);
+
+    case AppRoutes.resetSucceededRoute:
+      return MaterialPageRoute(
+          builder: (context) => const ResetSucceededPage(), settings: routeSettings);
+
+    case AppRoutes.homePageRoute:
+      return MaterialPageRoute(
+          builder: (context) => const HomePage(), settings: routeSettings);
 
     case AppRoutes.loginRoute:
       return MaterialPageRoute(

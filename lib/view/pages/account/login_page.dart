@@ -1,9 +1,11 @@
+import 'package:final_project/view/pages/account/register/register_page.dart';
 import 'package:final_project/view_model/login_cubit/login_cubit.dart';
 import 'package:final_project/view_model/login_cubit/login_cubit.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:sizer/sizer.dart';
 
 import '../../../utilities/assets/app_assets.dart';
@@ -12,25 +14,8 @@ import '../../../utilities/theme/app_themes.dart';
 import '../../widgets/default_button.dart';
 import '../../widgets/default_form_field.dart';
 
-TextEditingController passwordController = TextEditingController();
-TextEditingController nameController = TextEditingController();
-final formKey = GlobalKey<FormState>();
-// late Color color;
-// bool isSecured = true;
-bool flag = true;
-bool isChecked = false;
 
-bool changeButtonColor(String c1, String c2) {
-  if (c1.isEmpty || c2.isEmpty) {
-    // color = AppTheme.grey;
-    flag = false;
-  } else {
-    // color = AppTheme.primaryColor;
-    flag = true;
-  }
 
-  return flag;
-}
 
 class LoginPage extends StatefulWidget {
   const LoginPage({Key? key}) : super(key: key);
@@ -41,7 +26,36 @@ class LoginPage extends StatefulWidget {
 
 class _LoginPageState extends State<LoginPage> {
   @override
+  TextEditingController passwordController = TextEditingController();
+  TextEditingController loginNameController = TextEditingController();
+
+  final loginFormKey = GlobalKey<FormState>();
+  bool flag = true;
+  bool isChecked = false;
+
+  bool changeButtonColor(String c1, String c2) {
+    if (c1.isEmpty || c2.isEmpty) {
+      // color = AppTheme.grey;
+      flag = false;
+    } else {
+      // color = AppTheme.primaryColor;
+      flag = true;
+    }
+
+    return flag;
+  }
+
+
+
+  void initState() {
+    _loadUserData();
+    super.initState();
+  }
+
+
+  @override
   Widget build(BuildContext context) {
+
     return BlocConsumer<LoginCubit, LoginState>(
       listener: (context, state) {},
       builder: (context, state) {
@@ -84,7 +98,7 @@ class _LoginPageState extends State<LoginPage> {
                   height: 60,
                 ),
                 Form(
-                  key: formKey,
+                  key: loginFormKey,
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
@@ -96,7 +110,7 @@ class _LoginPageState extends State<LoginPage> {
                         onChanged: (p0) {
                           setState(() {});
                         },
-                        controller: nameController,
+                        controller: loginNameController,
                         textInputAction: TextInputAction.next,
                         keyboardType: TextInputType.name,
                         prefixIcon: Icon(
@@ -130,9 +144,9 @@ class _LoginPageState extends State<LoginPage> {
                         hintText: 'Password',
                         suffixIcon: IconButton(
                             onPressed: () {
-                              loginCubit.isSecured == true
-                                  ? loginCubit.showPassword(false)
-                                  : loginCubit.showPassword(true);
+                              loginCubit.isSecured == false
+                                  ? loginCubit.showPassword(true)
+                                  : loginCubit.showPassword(false);
                             },
                             icon: loginCubit.isSecured == true
                                 ? Icon(Icons.visibility_off,
@@ -148,6 +162,16 @@ class _LoginPageState extends State<LoginPage> {
                             onChanged: (bool? value) {
                               setState(() {
                                 isChecked = value!;
+
+                                SharedPreferences.getInstance().then(
+                                        (prefs) {
+                                      prefs.setBool("remember_me", value);
+                                      prefs.setString('name',loginNameController.text);
+                                      prefs.setString('password', passwordController.text);
+                                    },);
+
+
+
                               });
                             },
                           ),
@@ -211,14 +235,14 @@ class _LoginPageState extends State<LoginPage> {
                     Onpressed: flag == false
                         ? () {}
                         : () {
-                            if (formKey.currentState!.validate()) {
+                            if (loginFormKey.currentState!.validate()) {
                               Navigator.pushNamed(
-                                  context, AppRoutes.jobsPageRoute);
+                                  context, AppRoutes.homePageRoute);
                             }
                           },
                     text: 'Login',
                     clr: changeButtonColor(
-                                nameController.text, passwordController.text) ==
+                        loginNameController.text, passwordController.text) ==
                             true
                         ? AppTheme.primaryColor
                         : AppTheme.grey,
@@ -271,4 +295,33 @@ class _LoginPageState extends State<LoginPage> {
       },
     );
   }
+
+  void _loadUserData() async {
+    try {
+      SharedPreferences _prefs = await SharedPreferences.getInstance();
+      var _name = _prefs.getString("name") ?? "";
+      var password = _prefs.getString("password") ?? "";
+      var rememberMe = _prefs.getBool("remember_me") ?? false;
+
+      print(rememberMe);
+      print(_name);
+      print(password);
+      if (rememberMe) {
+        setState(() {
+          isChecked = true;
+        });
+        loginNameController.text = _name ?? "";
+        passwordController.text = password ?? "";
+      }
+    } catch (e) {
+      print(e);
+    }
+  }
 }
+
+
+
+
+
+
+

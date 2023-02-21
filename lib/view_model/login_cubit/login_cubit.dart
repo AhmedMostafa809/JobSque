@@ -11,8 +11,8 @@ class LoginCubit extends Cubit<LoginState> {
 
 
 
-  bool isSecured=false;
-  bool confirm = false;
+  bool isSecured=true;
+  bool confirm = true;
   void showPassword(bool isSec){
     isSecured = isSec;
     emit(ChangePasswordState());

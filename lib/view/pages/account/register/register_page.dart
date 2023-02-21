@@ -13,25 +13,6 @@ import 'package:sizer/sizer.dart';
 
 import '../../../../view_model/register_cubit/register_cubit.dart';
 
-TextEditingController emailController = TextEditingController();
-TextEditingController passwordController = TextEditingController();
-TextEditingController nameController = TextEditingController();
-final formKey = GlobalKey<FormState>();
-late Color color;
-// bool isSecured = true;
-bool flag=true;
-bool changeButtonColor(String c1, String c2, String c3) {
-  if (c1.isEmpty || c2.isEmpty || c3.isEmpty) {
-    color = AppTheme.grey;
-    flag=false;
-  } else {
-    color = AppTheme.primaryColor;
-    flag=true;
-  }
-
-  return flag;
-}
-
 
 class RegisterPage extends StatefulWidget {
   const RegisterPage({Key? key}) : super(key: key);
@@ -41,6 +22,25 @@ class RegisterPage extends StatefulWidget {
 }
 
 class _RegisterPageState extends State<RegisterPage> {
+  TextEditingController emailController = TextEditingController();
+  TextEditingController passwordController = TextEditingController();
+  TextEditingController nameController = TextEditingController();
+  final formKey = GlobalKey<FormState>();
+  late Color color;
+// bool isSecured = true;
+  bool flag = true;
+
+  bool changeButtonColor(String c1, String c2, String c3) {
+    if (c1.isEmpty || c2.isEmpty || c3.isEmpty) {
+      color = AppTheme.grey;
+      flag = false;
+    } else {
+      color = AppTheme.primaryColor;
+      flag = true;
+    }
+
+    return flag;
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -95,14 +95,9 @@ class _RegisterPageState extends State<RegisterPage> {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       DefaultFormField(
-
                         onChanged: (p0) {
-                          setState(() {
-
-                          });
+                          setState(() {});
                         },
-
-
                         obSecured: false,
                         textInputAction: TextInputAction.next,
                         controller: nameController,
@@ -115,13 +110,9 @@ class _RegisterPageState extends State<RegisterPage> {
                         height: 20,
                       ),
                       DefaultFormField(
-
                         obSecured: false,
-
                         onChanged: (p0) {
-                          setState(() {
-
-                          });
+                          setState(() {});
                         },
                         controller: emailController,
                         textInputAction: TextInputAction.next,
@@ -143,11 +134,10 @@ class _RegisterPageState extends State<RegisterPage> {
                           } else {
                             return null;
                           }
-                        },onChanged: (p0) {
-                        setState(() {
-
-                        });
-                      },
+                        },
+                        onChanged: (p0) {
+                          setState(() {});
+                        },
                         // obscureText: true,
                         obSecured: registerCubit.isSecured,
                         controller: passwordController,
@@ -158,17 +148,15 @@ class _RegisterPageState extends State<RegisterPage> {
                         hintText: 'Password',
                         suffixIcon: IconButton(
                             onPressed: () {
-                              registerCubit.isSecured == true
-                                  ?registerCubit.showPassword(false)
-                                  :registerCubit.showPassword(true);
-                              setState(() {
-
-                              });
+                              registerCubit.isSecured == false
+                                  ? registerCubit.showPassword(true)
+                                  : registerCubit.showPassword(false);
+                              setState(() {});
                             },
-                            icon: registerCubit.isSecured == true
-                                ? Icon(Icons.visibility_off,
+                            icon: registerCubit.isSecured == false
+                                ? Icon(Icons.visibility,
                                     size: 20.sp, color: AppTheme.primaryColor)
-                                : Icon(Icons.visibility,
+                                : Icon(Icons.visibility_off,
                                     size: 20.sp, color: AppTheme.primaryColor)),
                       ),
                       const SizedBox(
@@ -206,7 +194,10 @@ class _RegisterPageState extends State<RegisterPage> {
                               ),
                               recognizer: TapGestureRecognizer()
                                 ..onTap = () {
-                                  Navigator.pushNamedAndRemoveUntil(context, AppRoutes.LoginPageRoute, (route) => false);
+                                  Navigator.pushNamedAndRemoveUntil(
+                                      context,
+                                      AppRoutes.LoginPageRoute,
+                                      (route) => false);
                                 })
                         ]),
                   ),
@@ -215,20 +206,21 @@ class _RegisterPageState extends State<RegisterPage> {
                   height: 2.h,
                 ),
                 DefaultButton(
-                    Onpressed:flag==false? (){}:() {
-                      if (formKey.currentState!.validate()) {
-                        Navigator.pushNamed(context, AppRoutes.LoginPageRoute);
-                      }
-
-                      },
+                    Onpressed: flag == false
+                        ? () {}
+                        : () {
+                            if (formKey.currentState!.validate()) {
+                              Navigator.pushNamed(context, AppRoutes.jobsPageRoute);
+                            }
+                          },
                     text: 'Create account',
-                    clr:changeButtonColor(nameController.text,
-                        emailController.text, passwordController.text)==true?
-                    AppTheme.primaryColor:AppTheme.grey,
-
-
-
-
+                    clr: changeButtonColor(
+                                nameController.text,
+                                emailController.text,
+                                passwordController.text) ==
+                            true
+                        ? AppTheme.primaryColor
+                        : AppTheme.grey,
                     Height: 7.h,
                     width: 90.w),
                 SizedBox(

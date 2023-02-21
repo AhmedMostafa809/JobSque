@@ -10,6 +10,7 @@ import 'package:final_project/view_model/theme_cubit/theme_cubit.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:sizer/sizer.dart';
 
 void main() async {
@@ -21,6 +22,11 @@ void main() async {
   //       // BlocProvider(create: (_) => ThemeCubit())
   //     ],
   //     child:
+
+
+  // final prefs =await SharedPreferences.getInstance();
+  // final ShowOnBoarding = prefs.getBool('ShowOnBoarding') ?? true;
+
   runApp(MultiBlocProvider(
       providers: [
 

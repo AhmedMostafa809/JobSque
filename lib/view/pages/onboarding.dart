@@ -4,6 +4,7 @@ import 'package:final_project/utilities/theme/app_themes.dart';
 import 'package:final_project/view/widgets/default_button.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:sizer/sizer.dart';
 import 'package:smooth_page_indicator/smooth_page_indicator.dart';
 
@@ -31,7 +32,6 @@ class _OnBoardingState extends State<OnBoarding> {
     return SafeArea(
       child: Scaffold(
           appBar: AppBar(
-
             elevation: 0,
             flexibleSpace: Padding(
               padding: const EdgeInsets.symmetric(horizontal: 20.0),
@@ -44,7 +44,8 @@ class _OnBoardingState extends State<OnBoarding> {
                   const Spacer(),
                   TextButton(
                       onPressed: () {
-                        Navigator.pushNamedAndRemoveUntil(context, AppRoutes.jobsPageRoute ,(route) => false);
+                        Navigator.pushNamedAndRemoveUntil(context,
+                            AppRoutes.registerPageRoute, (route) => false);
                       },
                       child: const Text("Skip",
                           style: TextStyle(fontSize: 16, color: AppTheme.grey)))
@@ -140,9 +141,20 @@ class _OnBoardingState extends State<OnBoarding> {
                     Padding(
                       padding: const EdgeInsets.all(8.0),
                       child: DefaultButton(
-                        Onpressed:isLastPage==true?()=> Navigator.pushNamedAndRemoveUntil(context, AppRoutes.registerPageRoute, (route) => false):() => controller.nextPage(
-                            duration: const Duration(microseconds: 500),
-                            curve: Curves.easeInOut),
+                        Onpressed: isLastPage == true
+                            ? () async {
+                                final prefs =
+                                    await SharedPreferences.getInstance();
+                                prefs.setBool('ShowOnBoarding', false);
+                                print("hi");
+                                Navigator.pushNamedAndRemoveUntil(
+                                    context,
+                                    AppRoutes.registerPageRoute,
+                                    (route) => false);
+                              }
+                            : () => controller.nextPage(
+                                duration: const Duration(microseconds: 500),
+                                curve: Curves.easeInOut),
                         text: isLastPage == false ? "Next" : "Get Started",
                         Height: 7.h,
                         width: 90.w,

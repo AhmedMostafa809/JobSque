@@ -13,11 +13,11 @@ class CheckEmailPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        leading: IconButton(
-          onPressed:(){Navigator.pop(context);} ,
-          icon: Icon(Icons.arrow_back),
-          color: AppTheme.darkGrey,
-        ),
+        // leading: IconButton(
+        //   onPressed:(){Navigator.pop(context);} ,
+        //   icon: Icon(Icons.arrow_back),
+        //   color: AppTheme.darkGrey,
+        // ),
         backgroundColor: Colors.transparent,
         elevation: 0,
       ),
@@ -32,7 +32,7 @@ class CheckEmailPage extends StatelessWidget {
                 height: 30.h,
               ),
               SizedBox(height: 5.h,),
-              Text(
+              const Text(
                 "Check your Email",
                 textAlign: TextAlign.center,
                 style: TextStyle(fontSize: 24, fontWeight: FontWeight.w500),

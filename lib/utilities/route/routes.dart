@@ -8,5 +8,7 @@ class AppRoutes {
       LoginPageRoute='LoginPaeg',restPasswordPageRoute='ResetPasswordScreen',
       checkEmaailPageRoute='checkEmailScreen',
       createNewPasswordPageRoute='createNewPasswordScreen',
+      homePageRoute='homePageScreen',
+      resetSucceededRoute='resetSucceededScreen',
       locationPageRoute = "locationScreen";
 }

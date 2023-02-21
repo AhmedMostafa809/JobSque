@@ -15,7 +15,7 @@ class RegisterSuccessPage extends StatelessWidget {
       appBar: AppBar(
         leading: IconButton(
           onPressed:(){Navigator.pop(context);} ,
-          icon: Icon(Icons.arrow_back),
+          icon: const Icon(Icons.arrow_back),
           color: AppTheme.darkGrey,
         ),
         backgroundColor: Colors.transparent,
@@ -32,7 +32,7 @@ class RegisterSuccessPage extends StatelessWidget {
                 height: 30.h,
               ),
               SizedBox(height: 5.h,),
-              Text(
+              const Text(
                 "Your account has been set up!",
                 textAlign: TextAlign.center,
                 style: TextStyle(fontSize: 24, fontWeight: FontWeight.w500),
@@ -58,8 +58,7 @@ class RegisterSuccessPage extends StatelessWidget {
           Padding(
             padding: const EdgeInsets.all(8.0),
             child: DefaultButton(
-              Onpressed: () => Navigator.pushNamed(
-                  context, AppRoutes.RegisterSuccessPageRoute),
+              Onpressed: () => Navigator.pushNamedAndRemoveUntil(context, AppRoutes.homePageRoute, (route) => false),
               text: "Get Started",
               Height: 7.h,
               width: 90.w,
