@@ -53,7 +53,7 @@ class MyApp extends StatelessWidget {
         // theme: cubit.isDarkTheme? Themes.darkTheme:Themes.lightTheme,
         // home: SplashScreen(),
         debugShowCheckedModeBanner: false,
-        initialRoute: AppRoutes.splashPageRoute,
+        initialRoute: AppRoutes.layoutRoute,
         onGenerateRoute: onGenerate,
       );
     });

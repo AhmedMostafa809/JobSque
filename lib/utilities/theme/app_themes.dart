@@ -1,7 +1,7 @@
 import 'dart:ui';
 
 class AppTheme{
-  static const Color baleBlue = Color(0xffD6E4FF);
+  static const Color baleBlue = Color(0xff2B3A8D);
   static const Color grey = Color(0xff6B7280);
   static const Color darkBlue = Color(0xff091A7A);
 

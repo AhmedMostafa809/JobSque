@@ -10,5 +10,8 @@ class AppRoutes {
       createNewPasswordPageRoute='createNewPasswordScreen',
       homePageRoute='homePageScreen',
       resetSucceededRoute='resetSucceededScreen',
+      layoutRoute='LayoutScreen',
       locationPageRoute = "locationScreen";
+
+
 }
