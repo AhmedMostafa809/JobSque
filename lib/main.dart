@@ -9,6 +9,7 @@ import 'package:final_project/view_model/register_cubit/register_cubit.dart';
 import 'package:final_project/view_model/theme_cubit/theme_cubit.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:sizer/sizer.dart';
@@ -27,12 +28,16 @@ void main() async {
   // final prefs =await SharedPreferences.getInstance();
   // final ShowOnBoarding = prefs.getBool('ShowOnBoarding') ?? true;
 
-  runApp(MultiBlocProvider(
+
+  SystemChrome.setPreferredOrientations([
+    DeviceOrientation.portraitUp,
+    DeviceOrientation.portraitDown,
+  ]).then((value) => runApp(MultiBlocProvider(
       providers: [
 
         BlocProvider(create: (_) => LoginCubit()),
         BlocProvider(create: (_) => RegisterCubit())],
-      child: const MyApp()));
+      child: const MyApp())));
   // )
   // );
 }
@@ -55,6 +60,7 @@ class MyApp extends StatelessWidget {
         debugShowCheckedModeBanner: false,
         initialRoute: AppRoutes.layoutRoute,
         onGenerateRoute: onGenerate,
+
       );
     });
 

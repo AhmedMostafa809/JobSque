@@ -30,6 +30,9 @@ Route<dynamic> onGenerate(RouteSettings routeSettings) {
     case AppRoutes.restPasswordPageRoute:
       return MaterialPageRoute(
           builder: (context) => const ResetPasswordPage(), settings: routeSettings);
+    case AppRoutes.searchRoute:
+      return MaterialPageRoute(
+          builder: (context) => const ResetPasswordPage(), settings: routeSettings);
     case AppRoutes.LoginPageRoute:
       return MaterialPageRoute(
           builder: (context) => const LoginPage(), settings: routeSettings);

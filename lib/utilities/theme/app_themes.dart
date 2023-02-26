@@ -12,8 +12,9 @@ class AppTheme{
   static const Color black = Color(0xff000000);
   static const Color primaryColor = Color(0xff3366FF);
 
-  //xd
-  static const Color lightColor = Color(0xffd9b1ab);
+
+  static const Color lightColor = Color(0xffD6E4FF);
+
   //xd
   static const Color pinkColor = Color(0xfffd7966);
 

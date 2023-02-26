@@ -29,6 +29,7 @@ static const String registerSuccess = 'assets/Success Account Ilustration.png';
 static const String resetSuccess = 'assets/Password Succesfully Ilustration.png';
 static const String checkEmail = 'assets/Email Ilustration.png';
 static const String resetSucceeded = 'assets/Password Succesfully Ilustration.png';
+static const String search = 'assets/Search Ilustration.png';
 
 
 }
