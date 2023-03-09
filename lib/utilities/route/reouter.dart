@@ -2,6 +2,11 @@
 
 import 'package:final_project/utilities/route/routes.dart';
 import 'package:final_project/view/pages/Home_pages/Layout.dart';
+import 'package:final_project/view/pages/Home_pages/apply_job/apply_steps.dart';
+import 'package:final_project/view/pages/Home_pages/apply_job/apply_success.dart';
+import 'package:final_project/view/pages/Home_pages/apply_job/job_details.dart';
+import 'package:final_project/view/pages/Messages/messages_page.dart';
+import 'package:final_project/view/pages/Messages/send_message_page.dart';
 import 'package:final_project/view/pages/account/register/jobs_page.dart';
 import 'package:final_project/view/pages/account/register/location_page.dart';
 import 'package:final_project/view/pages/account/register/register_success.dart';
@@ -12,6 +17,7 @@ import 'package:final_project/view/pages/account/reset_password/reset_successful
 import 'package:final_project/view/pages/Home_pages/home_screen.dart';
 import 'package:flutter/material.dart';
 
+import '../../view/pages/Home_pages/notification_page.dart';
 import '../../view/pages/account/login_page.dart';
 import '../../view/pages/account/register/register_page.dart';
 import '../../view/pages/onboarding.dart';
@@ -36,6 +42,21 @@ Route<dynamic> onGenerate(RouteSettings routeSettings) {
     case AppRoutes.LoginPageRoute:
       return MaterialPageRoute(
           builder: (context) => const LoginPage(), settings: routeSettings);
+    case AppRoutes.jobDetailRoute:
+      return MaterialPageRoute(
+          builder: (context) => const JobDetails(intialIndex: 0), settings: routeSettings);
+    case AppRoutes.messagesRoute:
+      return MaterialPageRoute(
+          builder: (context) => const MessagesPage(), settings: routeSettings);
+    case AppRoutes.applySuccessRoute:
+      return MaterialPageRoute(
+          builder: (context) => const ApplySucceeded(), settings: routeSettings);
+    case AppRoutes.notificationRoute:
+      return MaterialPageRoute(
+          builder: (context) => const NotificationPage(), settings: routeSettings);
+    case AppRoutes.stepperRoute:
+      return MaterialPageRoute(
+          builder: (context) => const ApplyStepsStepper(), settings: routeSettings);
     case AppRoutes.createNewPasswordPageRoute:
       return MaterialPageRoute(
           builder: (context) => const CreateNewPassword(), settings: routeSettings);

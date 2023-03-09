@@ -13,5 +13,10 @@ class AppRoutes {
       resetSucceededRoute = 'resetSucceededScreen',
       layoutRoute = 'LayoutScreen',
       searchRoute = 'SearchScreen',
+      jobDetailRoute = 'jobDetailsScreen',
+      messagesRoute = 'MessagesScreen',
+      stepperRoute = 'stepperScreen',
+      notificationRoute = 'notificationScreen',
+      applySuccessRoute = 'ApplyScreen',
       locationPageRoute = "locationScreen";
 }

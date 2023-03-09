@@ -1,4 +1,5 @@
-import 'package:final_project/view/pages/Home_pages/job_details.dart';
+import 'package:final_project/utilities/route/routes.dart';
+import 'package:final_project/view/pages/Home_pages/apply_job/job_details.dart';
 import 'package:final_project/view/widgets/recent_jobs_card.dart';
 import 'package:final_project/view/widgets/suggested_job_card.dart';
 import 'package:flutter/cupertino.dart';
@@ -28,7 +29,7 @@ class _HomePageState extends State<HomePage> {
       child: Scaffold(
         backgroundColor: Colors.white,
         body: SingleChildScrollView(
-          physics:BouncingScrollPhysics(),
+          physics:const BouncingScrollPhysics(),
           child: Padding(
             padding: EdgeInsets.all(20.sp),
             child: Column(
@@ -60,7 +61,9 @@ class _HomePageState extends State<HomePage> {
                         radius: 3.h,
                         backgroundColor: Colors.white,
                         child: IconButton(
-                          onPressed: () {},
+                          onPressed: () {
+                            Navigator.pushNamed(context, AppRoutes.notificationRoute);
+                          },
                           icon: const Icon(
                             Icons.notifications_none,
                             color: Colors.black87,
@@ -128,12 +131,12 @@ class _HomePageState extends State<HomePage> {
                 SizedBox(
                   height: 25.h,
                   child: ListView.builder(
-                    physics:BouncingScrollPhysics(),
+                    physics:const BouncingScrollPhysics(),
                       scrollDirection: Axis.horizontal,
                       shrinkWrap: true,
                       itemCount: 5,
                       itemBuilder: (BuildContext context, int index) {
-                        return Padding(
+                        return const Padding(
                           padding:  EdgeInsets.symmetric(horizontal: 8.0),
                           child: SuggestedJobs(),
                         );
@@ -160,13 +163,13 @@ class _HomePageState extends State<HomePage> {
                 ),
 
                 ListView.builder(
-                    physics:BouncingScrollPhysics(),
+                    physics:const BouncingScrollPhysics(),
                     scrollDirection: Axis.vertical,
                     shrinkWrap: true,
                     itemCount: 5,
                     itemBuilder: (BuildContext context, int index) {
                       return RecentJobs(ontap: () {
-                        Navigator.push(context, MaterialPageRoute(builder:(context) =>  JobDetails(intialIndex: 1,)));
+                        Navigator.pushNamed(context, AppRoutes.jobDetailRoute);
                       },);
                     }),
 

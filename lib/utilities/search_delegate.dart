@@ -13,8 +13,10 @@ class jobSearch extends SearchDelegate {
     "Project Manager",
     "UI/UX Designer",
     "Front-End DeveloperFront-End Developer",
-    "honklolo","baha2 soltan",
-    'koko','messi'
+    "honklolo",
+    "baha2 soltan",
+    'koko',
+    'messi'
   ];
 
   List<String> recentJobs = [
@@ -67,7 +69,40 @@ class jobSearch extends SearchDelegate {
     final List<String> searchResult = jobsList
         .where((element) => element.toLowerCase().contains(query.toLowerCase()))
         .toList();
-    return ListView.builder(
+    return searchResult.isEmpty? ListView(
+      children: [
+        Padding(
+          padding: EdgeInsets.symmetric(horizontal: 5.w, vertical: 15.h),
+          child: Column(
+            children: [
+              Image.asset(
+                Img.search,
+                height: 30.h,
+              ),
+              SizedBox(
+                height: 3.h,
+              ),
+              const Text(
+                "Search not found",
+                textAlign: TextAlign.center,
+                style: TextStyle(fontSize: 24, fontWeight: FontWeight.w500),
+              ),
+              const SizedBox(
+                height: 8,
+              ),
+              const Text(
+                "Try searching with different keywords so we can show you",
+                textAlign: TextAlign.center,
+                style: TextStyle(
+                    fontSize: 14,
+                    fontWeight: FontWeight.w400,
+                    color: AppTheme.grey),
+              ),
+            ],
+          ),
+        ),
+      ],
+    ):ListView.builder(
         scrollDirection: Axis.vertical,
         shrinkWrap: true,
         itemCount: searchResult.length,
@@ -78,140 +113,228 @@ class jobSearch extends SearchDelegate {
         });
   }
 
-
-
-
-
-
-
-
-
-
   @override
   Widget buildSuggestions(BuildContext context) {
-    final List<String> searchResult = jobsList
-        .where((element) => element.toLowerCase().contains(query.toLowerCase()))
-        .toList();
-    final List<String> suggestions = recentJobs
-        .where((element) => element.toLowerCase().contains(query.toLowerCase()))
-        .toList();
-    final List<String> popular = popularJobs
-        .where((element) => element.toLowerCase().contains(query.toLowerCase()))
-        .toList();
-    return searchResult.isEmpty
-        ? ListView(
+    final List<String> searchResult = query.isEmpty
+        ? recentJobs
+        : jobsList
+            .where((element) =>
+                element.toLowerCase().contains(query.toLowerCase()))
+            .toList();
 
-            children: [
-              Padding(
-                padding: EdgeInsets.symmetric(horizontal: 5.w,vertical: 15.h),
-                child: Column(
-                  children: [
-                    Image.asset(
-                      Img.search,
-                      height: 30.h,
-                    ),
-                    SizedBox(
-                      height: 3.h,
-                    ),
-                    const Text(
-                      "Search not found",
-                      textAlign: TextAlign.center,
-                      style: TextStyle(
-                          fontSize: 24, fontWeight: FontWeight.w500),
-                    ),
-                    const SizedBox(
-                      height: 8,
-                    ),
-                    const Text(
-                      "Try searching with different keywords so we can show you",
-                      textAlign: TextAlign.center,
-                      style: TextStyle(
-                          fontSize: 14,
-                          fontWeight: FontWeight.w400,
-                          color: AppTheme.grey),
-                    ),
-                  ],
+    if (query.isEmpty) {
+      return ListView(
+        physics: BouncingScrollPhysics(),
+        children: [
+          Container(
+            width: double.infinity,
+            height: 4.h,
+            color: AppTheme.lightGrey,
+            child: Padding(
+              padding: EdgeInsets.symmetric(horizontal: 5.w, vertical: 1.h),
+              child: const Text(
+                'Recent searches',
+                style: TextStyle(color: AppTheme.grey),
+              ),
+            ),
+          ),
+          ListView.builder(
+            physics: BouncingScrollPhysics(),
+            shrinkWrap: true,
+            itemCount: searchResult.length,
+            itemBuilder: (context, index) {
+              return ListTile(
+                onTap: (){
+                  query = searchResult[index];
+                },
+                leading: const Icon(Icons.watch_later_outlined),
+                title: Text(searchResult.elementAt(index)),
+                trailing: const Icon(
+                  Icons.highlight_remove_outlined,
+                  color: Colors.red,
                 ),
+              );
+            },
+          ),
+          Container(
+            width: double.infinity,
+            height: 4.h,
+            color: AppTheme.lightGrey,
+            child: Padding(
+              padding: EdgeInsets.symmetric(horizontal: 5.w, vertical: 1.h),
+              child: const Text(
+                'Popular search',
+                style: TextStyle(color: AppTheme.grey),
               ),
-            ],
-          )
-        : ListView(
-            physics: const BouncingScrollPhysics(),
-            children: [
-              suggestions.isEmpty? Text('') : Column(
-                children: [
-                  Container(
-                    width: double.infinity,
-                    height: 4.h,
-                    color: AppTheme.lightGrey,
-                    child: Padding(
-                      padding:
-                          EdgeInsets.symmetric(horizontal: 5.w, vertical: 1.h),
-                      child: const Text(
-                        'Recent search',
-                        style: TextStyle(color: AppTheme.grey),
-                      ),
-                    ),
-                  ),
-                  ListView.builder(
-                      physics: const BouncingScrollPhysics(),
-                      shrinkWrap: true,
-                      scrollDirection: Axis.vertical,
-                      itemCount: suggestions.length,
-                      itemBuilder: (context, index) {
-                        return ListTile(
-                          leading: const Icon(Icons.watch_later_outlined),
-                          title: Text(suggestions.elementAt(index)),
-                          trailing: const Icon(
-                            Icons.remove_circle_outline,
-                            color: Colors.red,
-                          ),
-                        );
-                      }),
-                ],
+            ),
+          ),
+          ListView.builder(
+            shrinkWrap: true,
+            physics: BouncingScrollPhysics(),
+            itemCount: popularJobs.length,
+            itemBuilder: (context, index) {
+              return ListTile(
+                onTap: (){
+                  query = searchResult[index];
+                },
+                leading: const Icon(Icons.search),
+                title: Text(popularJobs.elementAt(index)),
+                trailing: const Icon(
+                  Icons.arrow_circle_right_outlined,
+                  color: Colors.blue,
+                ),
+              );
+            },
+          ),
+        ],
+      );
+    }
+    else if (searchResult.isEmpty) {
+      return SizedBox();
+    }
+    else {
+      return Padding(
+        padding: EdgeInsets.all(20),
+        child: ListView.builder(
+          itemCount: searchResult.length,
+          itemBuilder: (context, index) {
+            return ListTile(
+              onTap: (){
+                query = searchResult[index];
+              },
+              leading: const Icon(Icons.search),
+              title: Text(searchResult.elementAt(index)),
+              trailing: const Icon(
+                Icons.arrow_circle_right_outlined,
+                color: Colors.blue,
               ),
-              popular.isEmpty? Text('') :  Column(
-                children: [
-                  Container(
-                    width: double.infinity,
-                    height: 4.h,
-                    color: AppTheme.lightGrey,
-                    child: Padding(
-                      padding:
-                          EdgeInsets.symmetric(horizontal: 5.w, vertical: 1.h),
-                      child: const Text(
-                        'Popular search',
-                        style: TextStyle(color: AppTheme.grey),
-                      ),
-                    ),
-                  ),
-                  ListView.builder(
-                      physics: const BouncingScrollPhysics(),
-                      shrinkWrap: true,
-                      scrollDirection: Axis.vertical,
-                      itemCount: popular.length,
-                      itemBuilder: (context, index) {
-                        return ListTile(
-                          leading: const Icon(Icons.search),
-                          title: Text(popular.elementAt(index)),
-                          trailing: const Icon(
-                            Icons.arrow_circle_right_outlined,
-                            color: Colors.blue,
-                          ),
-                        );
-                      }),
-                ],
-              ),
-              ListView.builder(
-                  scrollDirection: Axis.vertical,
-                  shrinkWrap: true,
-                  itemCount: searchResult.length,
-                  itemBuilder: (context, index) {
-                    return ListTile(
-                      title: query.contains(searchResult.elementAt(index))? Text(searchResult.elementAt(index)):null,
-                    );
-                  })
-            ],
-          );
+            );
+          },
+        ),
+      );
+    }
+
+    // final List<String> suggestions = recentJobs
+    //     .where((element) => element.toLowerCase().contains(query.toLowerCase()))
+    //     .toList();
+    // final List<String> popular = popularJobs
+    //     .where((element) => element.toLowerCase().contains(query.toLowerCase()))
+    //     .toList();
+    // return searchResult.isEmpty
+    //     ?
+    //     ListView(
+    //
+    //         children: [
+    //           Padding(
+    //             padding: EdgeInsets.symmetric(horizontal: 5.w,vertical: 15.h),
+    //             child: Column(
+    //               children: [
+    //                 Image.asset(
+    //                   Img.search,
+    //                   height: 30.h,
+    //                 ),
+    //                 SizedBox(
+    //                   height: 3.h,
+    //                 ),
+    //                 const Text(
+    //                   "Search not found",
+    //                   textAlign: TextAlign.center,
+    //                   style: TextStyle(
+    //                       fontSize: 24, fontWeight: FontWeight.w500),
+    //                 ),
+    //                 const SizedBox(
+    //                   height: 8,
+    //                 ),
+    //                 const Text(
+    //                   "Try searching with different keywords so we can show you",
+    //                   textAlign: TextAlign.center,
+    //                   style: TextStyle(
+    //                       fontSize: 14,
+    //                       fontWeight: FontWeight.w400,
+    //                       color: AppTheme.grey),
+    //                 ),
+    //               ],
+    //             ),
+    //           ),
+    //         ],
+    //       )
+    //     : ListView(
+    //         physics: const BouncingScrollPhysics(),
+    //         children: [
+    //           suggestions.isEmpty? Text('') : Column(
+    //             children: [
+    //               Container(
+    //                 width: double.infinity,
+    //                 height: 4.h,
+    //                 color: AppTheme.lightGrey,
+    //                 child: Padding(
+    //                   padding:
+    //                       EdgeInsets.symmetric(horizontal: 5.w, vertical: 1.h),
+    //                   child: const Text(
+    //                     'Recent search',
+    //                     style: TextStyle(color: AppTheme.grey),
+    //                   ),
+    //                 ),
+    //               ),
+    //               ListView.builder(
+    //                   physics: const BouncingScrollPhysics(),
+    //                   shrinkWrap: true,
+    //                   scrollDirection: Axis.vertical,
+    //                   itemCount: suggestions.length,
+    //                   itemBuilder: (context, index) {
+    //                     return ListTile(
+    //                       leading: const Icon(Icons.watch_later_outlined),
+    //                       title: Text(suggestions.elementAt(index)),
+    //                       trailing: const Icon(
+    //                         Icons.remove_circle_outline,
+    //                         color: Colors.red,
+    //                       ),
+    //                     );
+    //                   }),
+    //             ],
+    //           ),
+    //           popular.isEmpty? Text('') :  Column(
+    //             children: [
+    //               Container(
+    //                 width: double.infinity,
+    //                 height: 4.h,
+    //                 color: AppTheme.lightGrey,
+    //                 child: Padding(
+    //                   padding:
+    //                       EdgeInsets.symmetric(horizontal: 5.w, vertical: 1.h),
+    //                   child: const Text(
+    //                     'Popular search',
+    //                     style: TextStyle(color: AppTheme.grey),
+    //                   ),
+    //                 ),
+    //               ),
+    //               ListView.builder(
+    //                   physics: const BouncingScrollPhysics(),
+    //                   shrinkWrap: true,
+    //                   scrollDirection: Axis.vertical,
+    //                   itemCount: popular.length,
+    //                   itemBuilder: (context, index) {
+    //                     return ListTile(
+    //                       leading: const Icon(Icons.search),
+    //                       title: Text(popular.elementAt(index)),
+    //                       trailing: const Icon(
+    //                         Icons.arrow_circle_right_outlined,
+    //                         color: Colors.blue,
+    //                       ),
+    //                     );
+    //                   }),
+    //             ],
+    //           ),
+    //           ListView.builder(
+    //               scrollDirection: Axis.vertical,
+    //               shrinkWrap: true,
+    //               itemCount: searchResult.length,
+    //               itemBuilder: (context, index) {
+    //                 return ListTile(
+    //                   title: query.contains(searchResult.elementAt(index))? Text(searchResult.elementAt(index)):null,
+    //                 );
+    //               })
+    //         ],
+    //       );
   }
 }

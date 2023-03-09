@@ -1,4 +1,5 @@
 import 'package:final_project/view/pages/Home_pages/home_screen.dart';
+import 'package:final_project/view/pages/Messages/messages_page.dart';
 import 'package:flutter/material.dart';
 
 import '../../../utilities/theme/app_themes.dart';
@@ -11,7 +12,12 @@ class LayOut extends StatefulWidget {
   @override
   _LayOutState createState() => _LayOutState();
 }
-
+ List<Widget> widgetsList =<Widget> [
+  HomePage(),
+  MessagesPage()
+  // const NewsCardItem(),
+  // const SettingsWidget(),
+];
 
 
 int _currentIndex = 0;
@@ -19,11 +25,7 @@ int _currentIndex = 0;
 
 class _LayOutState extends State<LayOut> {
   @override
-  static const List<Widget> widgetsList =<Widget> [
-     HomePage(),
-    // const NewsCardItem(),
-    // const SettingsWidget(),
-  ];
+
 
     void _onItemTapped(int index) {
       setState(() {
@@ -47,7 +49,7 @@ class _LayOutState extends State<LayOut> {
             label: 'Home',
             ),
           BottomNavigationBarItem(
-            icon: Icon(Icons.messenger_outline),
+            icon: Icon(Icons.message_outlined),
             label: 'Message',
 
           ),
@@ -64,7 +66,8 @@ class _LayOutState extends State<LayOut> {
           ),
         ],
         currentIndex: _currentIndex,
-        elevation: 0,
+
+        elevation: 1000,
         unselectedItemColor: AppTheme.grey,
         selectedItemColor: AppTheme.primaryColor,
         onTap: _onItemTapped,

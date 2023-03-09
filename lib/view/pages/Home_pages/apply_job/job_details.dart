@@ -1,4 +1,4 @@
-import 'package:final_project/utilities/assets/app_assets.dart';
+import  'package:final_project/utilities/assets/app_assets.dart';
 import 'package:final_project/view/widgets/suggested_job_card.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -6,9 +6,9 @@ import 'package:flutter/rendering.dart';
 import 'package:flutter/widgets.dart';
 import 'package:sizer/sizer.dart';
 
-import '../../../utilities/route/routes.dart';
-import '../../../utilities/theme/app_themes.dart';
-import '../../widgets/default_button.dart';
+import '../../../../utilities/route/routes.dart';
+import '../../../../utilities/theme/app_themes.dart';
+import '../../../widgets/default_button.dart';
 
 class JobDetails extends StatefulWidget {
   final intialIndex;
@@ -153,16 +153,6 @@ class _JobDetailsState extends State<JobDetails>
                   elevation: 0,
                   backgroundColor: Colors.white,
                   toolbarHeight: 5.h,
-                  // flexibleSpace: Padding(
-                  //   padding:  EdgeInsets.symmetric(horizontal: 8.0),
-                  //   child: Container(
-                  //     // width: 5.w,
-                  //     decoration: BoxDecoration(
-                  //       color: AppTheme.lightGrey,
-                  //       borderRadius: BorderRadius.circular(30)
-                  //     ),
-                  //   ),
-                  // ),
                   flexibleSpace: Padding(
                     padding: EdgeInsets.symmetric(horizontal: 5.w),
                     child: Container(
@@ -339,7 +329,7 @@ class _JobDetailsState extends State<JobDetails>
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
           DefaultButton(
-            Onpressed: () => Navigator.pushNamed(context, AppRoutes.RegisterSuccessPageRoute),
+            Onpressed: () => Navigator.pushNamed(context, AppRoutes.stepperRoute),
             text: "Apply now",
             Height: 7.h,
             width: 90.w,
