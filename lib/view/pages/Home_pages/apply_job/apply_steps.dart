@@ -1,4 +1,3 @@
-
 import 'dart:io';
 import 'dart:ui';
 
@@ -22,7 +21,6 @@ class ApplyStepsStepper extends StatefulWidget {
   _ApplyStepsStepperState createState() => _ApplyStepsStepperState();
 }
 
-
 int activeStep = 0;
 
 int _currentStep = 0;
@@ -30,11 +28,12 @@ StepperType stepperType = StepperType.horizontal;
 
 class _ApplyStepsStepperState extends State<ApplyStepsStepper> {
   @override
-  String pdf='';
+  String pdf = '';
   TextEditingController emailApplyController = TextEditingController();
   TextEditingController phoneController = TextEditingController();
   TextEditingController fullNameController = TextEditingController();
   JobChoice? _choice = JobChoice.Ux;
+
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Colors.white,
@@ -97,7 +96,9 @@ class _ApplyStepsStepperState extends State<ApplyStepsStepper> {
                               fontWeight: FontWeight.w400,
                               color: Colors.black87),
                         ),
-                        SizedBox(height: 1.h,),
+                        SizedBox(
+                          height: 1.h,
+                        ),
                         const Text(
                           "Fill in your bio data correctly",
                           style: TextStyle(
@@ -191,7 +192,9 @@ class _ApplyStepsStepperState extends State<ApplyStepsStepper> {
                               fontWeight: FontWeight.w400,
                               color: Colors.black87),
                         ),
-                        SizedBox(height: 1.h,),
+                        SizedBox(
+                          height: 1.h,
+                        ),
                         const Text(
                           "Fill in your bio data correctly",
                           style: TextStyle(
@@ -208,10 +211,11 @@ class _ApplyStepsStepperState extends State<ApplyStepsStepper> {
                               color: _choice == JobChoice.Ux
                                   ? AppTheme.lightColor
                                   : Colors.transparent,
-                          border: Border.all(color:  _choice == JobChoice.Ux
-                              ? AppTheme.blue
-                              : Colors.grey,)
-                          ),
+                              border: Border.all(
+                                color: _choice == JobChoice.Ux
+                                    ? AppTheme.blue
+                                    : Colors.grey,
+                              )),
                           child: RadioListTile(
                             controlAffinity: ListTileControlAffinity.trailing,
                             title: const Text('Senior UX Designer'),
@@ -219,9 +223,7 @@ class _ApplyStepsStepperState extends State<ApplyStepsStepper> {
                             value: JobChoice.Ux,
                             onChanged: (JobChoice? value) {
                               _choice = value;
-                              setState(() {
-
-                              });
+                              setState(() {});
                             },
                             groupValue: _choice,
                           ),
@@ -235,11 +237,11 @@ class _ApplyStepsStepperState extends State<ApplyStepsStepper> {
                               color: _choice == JobChoice.Ui
                                   ? AppTheme.lightColor
                                   : Colors.transparent,
-                              border: Border.all(color:  _choice == JobChoice.Ui
-                                  ? AppTheme.blue
-                                  : Colors.grey,)
-                          ),
-
+                              border: Border.all(
+                                color: _choice == JobChoice.Ui
+                                    ? AppTheme.blue
+                                    : Colors.grey,
+                              )),
                           child: RadioListTile(
                             controlAffinity: ListTileControlAffinity.trailing,
                             title: const Text('Senior UI Designer'),
@@ -247,9 +249,7 @@ class _ApplyStepsStepperState extends State<ApplyStepsStepper> {
                             value: JobChoice.Ui,
                             onChanged: (JobChoice? value) {
                               _choice = value;
-                              setState(() {
-
-                              });
+                              setState(() {});
                             },
                             groupValue: _choice,
                           ),
@@ -263,11 +263,11 @@ class _ApplyStepsStepperState extends State<ApplyStepsStepper> {
                               color: _choice == JobChoice.GD
                                   ? AppTheme.lightColor
                                   : Colors.transparent,
-                              border: Border.all(color:  _choice == JobChoice.GD
-                                  ? AppTheme.blue
-                                  : Colors.grey,)
-                          ),
-
+                              border: Border.all(
+                                color: _choice == JobChoice.GD
+                                    ? AppTheme.blue
+                                    : Colors.grey,
+                              )),
                           child: RadioListTile(
                             controlAffinity: ListTileControlAffinity.trailing,
                             title: const Text('Graphik Designer'),
@@ -275,13 +275,12 @@ class _ApplyStepsStepperState extends State<ApplyStepsStepper> {
                             value: JobChoice.GD,
                             onChanged: (JobChoice? value) {
                               _choice = value;
-                              setState(() {
-
-                              });
+                              setState(() {});
                             },
                             groupValue: _choice,
                           ),
-                        ),SizedBox(
+                        ),
+                        SizedBox(
                           height: 2.h,
                         ),
                         Container(
@@ -290,11 +289,11 @@ class _ApplyStepsStepperState extends State<ApplyStepsStepper> {
                               color: _choice == JobChoice.FE
                                   ? AppTheme.lightColor
                                   : Colors.transparent,
-                              border: Border.all(color:  _choice == JobChoice.FE
-                                  ? AppTheme.blue
-                                  : Colors.grey,)
-                          ),
-
+                              border: Border.all(
+                                color: _choice == JobChoice.FE
+                                    ? AppTheme.blue
+                                    : Colors.grey,
+                              )),
                           child: RadioListTile(
                             controlAffinity: ListTileControlAffinity.trailing,
                             title: const Text('Front-End Developer'),
@@ -302,9 +301,7 @@ class _ApplyStepsStepperState extends State<ApplyStepsStepper> {
                             value: JobChoice.FE,
                             onChanged: (JobChoice? value) {
                               _choice = value;
-                              setState(() {
-
-                              });
+                              setState(() {});
                             },
                             groupValue: _choice,
                           ),
@@ -332,7 +329,9 @@ class _ApplyStepsStepperState extends State<ApplyStepsStepper> {
                                 fontWeight: FontWeight.w400,
                                 color: Colors.black87),
                           ),
-                          SizedBox(height: 1.h,),
+                          SizedBox(
+                            height: 1.h,
+                          ),
                           const Text(
                             "Fill in your bio data correctly",
                             style: TextStyle(
@@ -350,7 +349,9 @@ class _ApplyStepsStepperState extends State<ApplyStepsStepper> {
                                 fontWeight: FontWeight.w400,
                                 color: Colors.black87),
                           ),
-                          SizedBox(height: 2.h,),
+                          SizedBox(
+                            height: 2.h,
+                          ),
                           pdf.isEmpty
                               ? const Center(
                                   child: Text('No files uploaded'),
@@ -360,9 +361,10 @@ class _ApplyStepsStepperState extends State<ApplyStepsStepper> {
                                   decoration: BoxDecoration(
                                       borderRadius: BorderRadius.circular(8),
                                       color: Colors.transparent,
-                                      border: Border.all(color:Colors.grey,)
-                            ),
-                            child: Padding(
+                                      border: Border.all(
+                                        color: Colors.grey,
+                                      )),
+                                  child: Padding(
                                     padding:
                                         EdgeInsets.symmetric(horizontal: 4.0.w),
                                     child: Row(
@@ -392,40 +394,43 @@ class _ApplyStepsStepperState extends State<ApplyStepsStepper> {
                                         ),
                                         const Spacer(),
                                         InkWell(
-                                          onTap: () async{
-                                            FilePickerResult? result = await FilePicker.platform.pickFiles();
+                                          onTap: () async {
+                                            FilePickerResult? result =
+                                                await FilePicker.platform
+                                                    .pickFiles();
                                             if (result != null) {
-                                              PlatformFile file = result.files.first;
-                                              pdf= file.name;
-                                              setState(() {
-
-                                              });
+                                              PlatformFile file =
+                                                  result.files.first;
+                                              pdf = file.name;
+                                              setState(() {});
                                             } else {
                                               print('No file selected');
                                             }
                                           },
-                                          child: Icon(Icons.mode_edit_outline_outlined,
+                                          child: Icon(
+                                              Icons.mode_edit_outline_outlined,
                                               color: AppTheme.primaryColor,
                                               size: 25.sp),
                                         ),
                                         InkWell(
-                                          onTap: (){
+                                          onTap: () {
                                             pdf = '';
-                                            setState(() {
-
-                                            });
+                                            setState(() {});
                                           },
-                                          child: Icon(Icons.highlight_remove_outlined,
-                                              color: Colors.red, size: 25.sp),
+                                          child: Icon(
+                                              Icons.highlight_remove_outlined,
+                                              color: Colors.red,
+                                              size: 25.sp),
                                         ),
                                       ],
                                     ),
                                   ),
                                 ),
-                          SizedBox(height: 2.h,),
-
+                          SizedBox(
+                            height: 2.h,
+                          ),
                           Padding(
-                            padding:  EdgeInsets.symmetric(vertical: 3.h),
+                            padding: EdgeInsets.symmetric(vertical: 3.h),
                             child: DottedBorder(
                               radius: const Radius.circular(8),
                               borderType: BorderType.RRect,
@@ -435,65 +440,81 @@ class _ApplyStepsStepperState extends State<ApplyStepsStepper> {
                               child: Container(
                                 decoration: BoxDecoration(
                                     color: AppTheme.lightblue,
-                                  borderRadius: BorderRadius.circular(8)
-                                ),
-
+                                    borderRadius: BorderRadius.circular(8)),
                                 width: double.infinity,
                                 height: 25.h,
-                              child: Column(
-                                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                                children:  [
-                                  CircleAvatar(
-                                    radius: 20.sp,
-                                    backgroundColor: AppTheme.lightColor,
-                                    child: Icon(Icons.upload_file,size: 25.sp,),
-                                  ),
-                                  const Text('Upload your other file',style: TextStyle(
-                                      fontSize: 18,
-                                      fontWeight: FontWeight.w400,
-                                      color: Colors.black87),),
+                                child: Column(
+                                  mainAxisAlignment:
+                                      MainAxisAlignment.spaceEvenly,
+                                  children: [
+                                    CircleAvatar(
+                                      radius: 20.sp,
+                                      backgroundColor: AppTheme.lightColor,
+                                      child: Icon(
+                                        Icons.upload_file,
+                                        size: 25.sp,
+                                      ),
+                                    ),
+                                    const Text(
+                                      'Upload your other file',
+                                      style: TextStyle(
+                                          fontSize: 18,
+                                          fontWeight: FontWeight.w400,
+                                          color: Colors.black87),
+                                    ),
                                     const Text(
                                       'Max. file size 10 MB',
                                       style: TextStyle(
                                           color: Colors.grey, fontSize: 12),
                                     ),
                                     // ElevatedButton(onPressed: (){}, child: Text('Add file'))
-                                  SizedBox(
-                                    width: 80.w,
-                                    height: 6.h,
-
-                                    child: ElevatedButton(
-                                      onPressed: () async{
-                                        FilePickerResult? result = await FilePicker.platform.pickFiles();
+                                    SizedBox(
+                                      width: 80.w,
+                                      height: 6.h,
+                                      child: ElevatedButton(
+                                        onPressed: () async {
+                                          FilePickerResult? result =
+                                              await FilePicker.platform
+                                                  .pickFiles();
                                           if (result != null) {
-                                          PlatformFile file = result.files.first;
-                                          pdf= file.name;
-                                          setState(() {
-
-                                          });
-                                        } else {
-                                          print('No file selected');
-                                        }
-                                      },
-                                      style: ElevatedButton.styleFrom(
-                                        backgroundColor: AppTheme.lightblue,
-                                        shape: const StadiumBorder(),
-                                        side: const BorderSide(color: AppTheme.primaryColor, width: 2),
+                                            PlatformFile file =
+                                                result.files.first;
+                                            pdf = file.name;
+                                            setState(() {});
+                                          } else {
+                                            print('No file selected');
+                                          }
+                                        },
+                                        style: ElevatedButton.styleFrom(
+                                          backgroundColor: AppTheme.lightblue,
+                                          shape: const StadiumBorder(),
+                                          side: const BorderSide(
+                                              color: AppTheme.primaryColor,
+                                              width: 2),
+                                        ),
+                                        child: Row(
+                                          mainAxisAlignment:
+                                              MainAxisAlignment.center,
+                                          children: const [
+                                            Icon(
+                                              Icons.upload_outlined,
+                                              color: AppTheme.primaryColor,
+                                            ),
+                                            Text(
+                                              'Add file',
+                                              style: TextStyle(
+                                                  color: AppTheme.primaryColor,
+                                                  fontSize: 16),
+                                            ),
+                                          ],
+                                        ),
                                       ),
-                                      child: Row(
-                                        mainAxisAlignment: MainAxisAlignment.center,
-                                        children: const [
-                                          Icon(Icons.upload_outlined,color: AppTheme.primaryColor,),
-                                          Text('Add file',style: TextStyle(color: AppTheme.primaryColor,fontSize: 16),),],
-                                      ),
-                                    ),
-                                  )
+                                    )
                                   ],
                                 ),
                               ),
                             ),
                           ),
-
                           SizedBox(
                             height: 5.h,
                           ),

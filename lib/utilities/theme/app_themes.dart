@@ -6,6 +6,8 @@ class AppTheme{
   static const Color darkBlue = Color(0xff091A7A);
   static const Color blue= Color(0xff387FFB);
   static const Color lightblue= Color(0xffECF2FF);
+  static const Color profileLightColor= Color(0xffD6E4FF);
+
 
 
   //xd

@@ -18,5 +18,17 @@ class AppRoutes {
       stepperRoute = 'stepperScreen',
       notificationRoute = 'notificationScreen',
       applySuccessRoute = 'ApplyScreen',
-      locationPageRoute = "locationScreen";
+      locationPageRoute = "locationScreen",
+  editProfilePageRoute = 'EditProfileScreen',
+  portfolioPageRoute = 'PortfolioScreen',
+  languagePageRoute = 'LanguageScreen',
+  profileNotificationsPageRoute = 'ProfileNotificationsScreen',
+  loginAndSecurityRoute = 'LoginAndSecurityScreen',
+  helpCenterPageRoute = 'helpCenterScreen',
+  termsAndConditionsRoute = 'termsAndConditionsScreen',
+  privacyPolicyPageRoute = 'privacyPolicyScreen';
+
+
+
+
 }

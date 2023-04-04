@@ -1,3 +1,8 @@
+import 'dart:math';
+
+import 'package:final_project/controller/constants/endpoints.dart';
+import 'package:final_project/controller/dio/dio_helper.dart';
+import 'package:final_project/model/user_model.dart';
 import 'package:final_project/view/pages/account/register/register_page.dart';
 import 'package:final_project/view_model/login_cubit/login_cubit.dart';
 import 'package:final_project/view_model/login_cubit/login_cubit.dart';
@@ -14,9 +19,6 @@ import '../../../utilities/theme/app_themes.dart';
 import '../../widgets/default_button.dart';
 import '../../widgets/default_form_field.dart';
 
-
-
-
 class LoginPage extends StatefulWidget {
   const LoginPage({Key? key}) : super(key: key);
 
@@ -26,8 +28,8 @@ class LoginPage extends StatefulWidget {
 
 class _LoginPageState extends State<LoginPage> {
   @override
-  TextEditingController passwordController = TextEditingController();
-  TextEditingController loginNameController = TextEditingController();
+  TextEditingController passwordController = TextEditingController(text: "Ahmedyasser16");
+  TextEditingController loginNameController = TextEditingController(text: 'ahmedyasse@gmail.com');
 
   final loginFormKey = GlobalKey<FormState>();
   bool flag = true;
@@ -46,18 +48,39 @@ class _LoginPageState extends State<LoginPage> {
   }
 
 
+  // void userLogin(String email, String password) {
+  //   DioHelper.postData(
+  //       endPoint: EndPoint.loginUrl,
+  //       data: {
+  //         "email": email,
+  //         "password": password
+  //       }).then((value) {
+  //     loginModel = LoginModel.fromJson(value.data);
+  //     print(value.data);
+  //     EndPoint.userToken= loginModel.token;
+  //     print(EndPoint.userToken);
+  //     print( " success");
+  //   });
+  // }
+
 
   void initState() {
     _loadUserData();
     super.initState();
   }
 
-
   @override
   Widget build(BuildContext context) {
-
     return BlocConsumer<LoginCubit, LoginState>(
-      listener: (context, state) {},
+      listener: (context, state) {
+        if(state is LoginLoadingState){
+           const CircularProgressIndicator();
+        }
+        else if( state is LoginSuccessState){
+          print("s");
+        }
+
+      },
       builder: (context, state) {
         final loginCubit = BlocProvider.of<LoginCubit>(context);
         return Scaffold(
@@ -155,7 +178,6 @@ class _LoginPageState extends State<LoginPage> {
                                     size: 20.sp, color: AppTheme.primaryColor)),
                       ),
                       Row(
-
                         children: [
                           Checkbox(
                             value: isChecked,
@@ -164,14 +186,14 @@ class _LoginPageState extends State<LoginPage> {
                                 isChecked = value!;
 
                                 SharedPreferences.getInstance().then(
-                                        (prefs) {
-                                      prefs.setBool("remember_me", value);
-                                      prefs.setString('name',loginNameController.text);
-                                      prefs.setString('password', passwordController.text);
-                                    },);
-
-
-
+                                  (prefs) {
+                                    prefs.setBool("remember_me", value);
+                                    prefs.setString(
+                                        'name', loginNameController.text);
+                                    prefs.setString(
+                                        'password', passwordController.text);
+                                  },
+                                );
                               });
                             },
                           ),
@@ -186,7 +208,9 @@ class _LoginPageState extends State<LoginPage> {
                           const Spacer(),
                           TextButton(
                               onPressed: () {
-                                Navigator.pushNamed(context, AppRoutes.restPasswordPageRoute); },
+                                Navigator.pushNamed(
+                                    context, AppRoutes.restPasswordPageRoute);
+                              },
                               child: const Text(
                                 'Forgot Password',
                                 style: TextStyle(
@@ -201,7 +225,7 @@ class _LoginPageState extends State<LoginPage> {
                   ),
                 ),
                 SizedBox(
-                  height:   15.h,
+                  height: 15.h,
                 ),
                 Center(
                   child: RichText(
@@ -222,7 +246,10 @@ class _LoginPageState extends State<LoginPage> {
                               ),
                               recognizer: TapGestureRecognizer()
                                 ..onTap = () {
-                                Navigator.pushNamedAndRemoveUntil(context, AppRoutes.registerPageRoute, (route) => false);
+                                  Navigator.pushNamedAndRemoveUntil(
+                                      context,
+                                      AppRoutes.registerPageRoute,
+                                      (route) => false);
                                   // navigate to desired screen
                                 })
                         ]),
@@ -235,14 +262,16 @@ class _LoginPageState extends State<LoginPage> {
                     Onpressed: flag == false
                         ? () {}
                         : () {
-                            if (loginFormKey.currentState!.validate()) {
-                              Navigator.pushNamed(
-                                  context, AppRoutes.homePageRoute);
-                            }
+                      loginCubit.userLogin(email: loginNameController.text, password: passwordController.text);
+                            // if (loginFormKey.currentState!.validate()) {
+                            //   userLogin(loginNameController.text, passwordController.text);
+                            //   // Navigator.pushNamed(
+                              //     context, AppRoutes.homePageRoute);
+                            // }
                           },
                     text: 'Login',
-                    clr: changeButtonColor(
-                        loginNameController.text, passwordController.text) ==
+                    clr: changeButtonColor(loginNameController.text,
+                                passwordController.text) ==
                             true
                         ? AppTheme.primaryColor
                         : AppTheme.grey,
@@ -318,10 +347,3 @@ class _LoginPageState extends State<LoginPage> {
     }
   }
 }
-
-
-
-
-
-
-

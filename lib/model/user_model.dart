@@ -1,34 +1,48 @@
-class UserModel{
-  String? id,email,name,password,job,location;
+class LoginModel {
+  User? user;
+  String? token;
+  bool? status;
 
-  UserModel({
-     this.id,
-     this.email,
-     this.name,
-     this.password,
-     this.job,
-     this.location,
-  });
+  LoginModel({this.user, this.token, this.status});
 
-  Map<String, dynamic> toMap() {
-    return {
-      'id': this.id,
-      'email': this.email,
-      'name': this.name,
-      'password': this.password,
-      'job': this.job,
-      'location': this.location,
-    };
+  LoginModel.fromJson(Map<String, dynamic> json) {
+    user = json['user'] != null ? User.fromJson(json['user']) : null;
+    token = json['token'];
+    status = json['status'];
   }
 
-  factory UserModel.fromMap(Map<String, dynamic> map) {
-    return UserModel(
-      id: map['id'] as String,
-      email: map['email'] as String,
-      name: map['name'] as String,
-      password: map['password'] as String,
-      job: map['job'] as String,
-      location: map['location'] as String,
-    );
+}
+
+class User {
+  int? id;
+  String? name;
+  String? otp;
+  String? towStep;
+  String? email;
+  String? emailVerifiedAt;
+  String? createdAt;
+  String? updatedAt;
+
+  User(
+      {this.id,
+        this.name,
+        this.otp,
+        this.towStep,
+        this.email,
+        this.emailVerifiedAt,
+        this.createdAt,
+        this.updatedAt
+      });
+
+  User.fromJson(Map<String, dynamic> json) {
+    id = json['id'];
+    name = json['name'];
+    otp = json['otp'];
+    towStep = json['tow_step'];
+    email = json['email'];
+    emailVerifiedAt = json['email_verified_at'];
+    createdAt = json['created_at'];
+    updatedAt = json['updated_at'];
   }
+
 }
