@@ -1,242 +1,238 @@
 import 'package:final_project/utilities/assets/app_assets.dart';
+import 'package:final_project/view_model/register_cubit/select_location/select_job_location_cubit.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:flutter/widgets.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:sizer/sizer.dart';
 
 import '../../../../utilities/route/routes.dart';
 import '../../../../utilities/theme/app_themes.dart';
 import '../../../widgets/default_button.dart';
 
-class LocationPage extends StatefulWidget {
+class LocationPage extends StatelessWidget {
   const LocationPage({Key? key}) : super(key: key);
 
   @override
-  _LocationPageState createState() => _LocationPageState();
-}
-
-bool? office, remote;
-
-List<Map> countries = [
-  {
-    'image': Img.america,
-    'name': 'United States',
-    'selected': false,
-  },
-  {
-    'image': Img.malisia,
-    'name': 'Malaysia',
-    'selected': false,
-  },
-  {
-    'image': Img.singaphor,
-    'name': 'Singapore',
-    'selected': false,
-  },
-  {
-    'image': Img.indonisia,
-    'name': 'Indonesia',
-    'selected': false,
-  },
-  {
-    'image': Img.philipine,
-    'name': 'Philiphines',
-    'selected': false,
-  },
-  {
-    'image': Img.poland,
-    'name': 'Polandia',
-    'selected': false,
-  },
-  {
-    'image': Img.india,
-    'name': 'India',
-    'selected': false,
-  },
-  {
-    'image': Img.vitnam,
-    'name': 'Vietnam',
-    'selected': false,
-  },
-  {
-    'image': Img.china,
-    'name': 'China',
-    'selected': false,
-  },
-  {
-    'image': Img.canada,
-    'name': 'Canada',
-    'selected': false,
-  },
-  {
-    'image': Img.saudia,
-    'name': 'Saudi Arabia',
-    'selected': false,
-  },
-  {
-    'image': Img.argantine,
-    'name': 'Argentina',
-    'selected': false,
-  },
-  {
-    'image': Img.brazil,
-    'name': 'Brazil',
-    'selected': false,
-  },
-];
-
-class _LocationPageState extends State<LocationPage> {
-  @override
   Widget build(BuildContext context) {
+    final selectLocationCupit = BlocProvider.of<SelectJobLocationCubit>(context);
     return Scaffold(
         body: Padding(
       padding: EdgeInsets.only(left: 8.w, right: 8.w, top: 10.h),
-      child: RefreshIndicator(
-        onRefresh: () async {
-          for (final country in countries) {
-            country['selected'] = false;
-          }
-          setState(() {});
-        },
-        child: ListView(physics: BouncingScrollPhysics(), children: [
-          const Text(
-            "Where are you prefefred Location?",
-            style: TextStyle(fontSize: 28, fontWeight: FontWeight.w500),
-          ),
-          const SizedBox(
-            height: 8,
-          ),
-          const Text(
-            "Let us know, where is the work location you want at this time, so we can adjust it.",
-            style: TextStyle(
-                fontSize: 14,
-                fontWeight: FontWeight.w400,
-                color: AppTheme.grey),
-          ),
-          const SizedBox(
-            height: 8,
-          ),
-          Container(
-            height: 7.h,
-            width: double.infinity,
-            decoration: BoxDecoration(
-                color: AppTheme.lightGrey,
-                borderRadius: BorderRadiusDirectional.circular(30)),
-            child: Row(
-              children: [
-                MaterialButton(
-                  onPressed: () {
-                    office = true;
-                    remote = false;
-                    setState(() {});
-                  },
-                  child: Text(
-                    'Work From Office',
-                    style: TextStyle(
-                        color: office == true ? Colors.white : AppTheme.grey),
-                  ),
-                  height: 7.h,
-                  minWidth: 40.w,
-                  color:
-                      office == true ? AppTheme.darkBlue : AppTheme.lightGrey,
-                  elevation: 0,
-                  shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(30)),
-                ),
-                Spacer(),
-                MaterialButton(
-                  onPressed: () {
-                    remote = true;
-                    office = false;
-                    setState(() {});
-                  },
-                  child: Text(
-                    'Work From Office',
-                    style: TextStyle(
-                        color: remote == true ? Colors.white : AppTheme.grey),
-                  ),
-                  height: 7.h,
-                  minWidth: 40.w,
-                  color:
-                      remote == true ? AppTheme.darkBlue : AppTheme.lightGrey,
-                  elevation: 0,
-                  shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(30)),
-                ),
-              ],
-            ),
-          ),
-          const SizedBox(
-            height: 20,
-          ),
-          const Text(
-            "Select the country you want for your job",
-            style: TextStyle(
-                fontSize: 14,
-                fontWeight: FontWeight.w400,
-                color: AppTheme.grey),
-          ),
+      child: ListView(physics: const BouncingScrollPhysics(), children: [
+        const Text(
+          "Where are you prefefred Location?",
+          style: TextStyle(fontSize: 28, fontWeight: FontWeight.w500),
+        ),
+        const SizedBox(
+          height: 8,
+        ),
+        const Text(
+          "Let us know, where is the work location you want at this time, so we can adjust it.",
+          style: TextStyle(
+              fontSize: 14,
+              fontWeight: FontWeight.w400,
+              color: AppTheme.grey),
+        ),
+        const SizedBox(
+          height: 8,
+        ),
+        Container(
+          height: 7.h,
+          width: double.infinity,
+          decoration: BoxDecoration(
+              color: AppTheme.lightGrey,
+              borderRadius: BorderRadiusDirectional.circular(30)),
+          child: BlocConsumer<SelectJobLocationCubit, SelectJobLocationState>(
+            listener: (context, state) {
 
-          const SizedBox(
-            height: 10,
-          ),
-
-
-
-          Wrap(
-            // alignment: WrapAlignment.,
-            // spacing: 15.sp,
-            // runAlignment: WrapAlignment.spaceEvenly,
-            direction: Axis.horizontal,
-
-            children: [
-              for (final country in countries)
-                Padding(
-                  padding: EdgeInsets.symmetric(horizontal: 2.w, vertical: 1.h),
-                  child: InkWell(
-                    onTap: () {
-                      country['selected'] = true;
-                      setState(() {});
+            },
+            builder: (context, state) {
+              return Row(
+                children: [
+                  MaterialButton(
+                    onPressed: () {
+                      office = selectLocationCupit.setOfficeJobs(office);
+                      remote = selectLocationCupit.returnFalse(remote);
                     },
-                    child: Container(
-                      height: 7.h,
-                      width: 35.w,
-                      decoration: BoxDecoration(
-                          border: Border.all(
-                              color: country['selected'] == true
-                                  ? AppTheme.primaryColor
-                                  : AppTheme.grey),
-                          color: country['selected'] == true
-                              ? AppTheme.baleBlue
-                              : AppTheme.lightGrey,
-                          borderRadius: BorderRadius.circular(100)),
-                      child: Row(
-                        children: [
-                          Image.asset(
-                            country['image'],
-                            height: 5.h,
-                          ),
-                          Text(country['name'])
-                        ],
-                      ),
+                    height: 7.h,
+                    minWidth: 40.w,
+                    color:
+                        office == true ? AppTheme.darkBlue : AppTheme.lightGrey,
+                    elevation: 0,
+                    shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(30)),
+                    child: Text(
+                  'Work From Office',
+                  style: TextStyle(
+                      color: office == true ? Colors.white : AppTheme.grey),
+                ),
+              ),
+              const Spacer(),
+              MaterialButton(
+                onPressed: () {
+                  remote = selectLocationCupit.setRemoteJobs(remote);
+                  office = selectLocationCupit.returnFalse(office);
+                  },
+                height: 7.h,
+                minWidth: 40.w,
+                color:
+                    remote == true ? AppTheme.darkBlue : AppTheme.lightGrey,
+                elevation: 0,
+                shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(30)),
+                child: Text(
+                  'Remote Work',
+                  style: TextStyle(
+                      color: remote == true ? Colors.white : AppTheme.grey),
+                ),
+              ),
+            ],
+          );
+  },
+),
+        ),
+        const SizedBox(
+          height: 20,
+        ),
+        const Text(
+          "Select the country you want for your job",
+          style: TextStyle(
+              fontSize: 14,
+              fontWeight: FontWeight.w400,
+              color: AppTheme.grey),
+        ),
+        const SizedBox(
+          height: 10,
+        ),
+        GridView.builder(
+          physics: BouncingScrollPhysics(),
+          shrinkWrap: true,
+          itemCount: countryImg.length,
+          gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+              crossAxisCount: 2,
+              childAspectRatio: 3,
+              mainAxisSpacing: 10,
+              crossAxisSpacing: 10),
+          itemBuilder: (BuildContext context, int index) {
+            return BlocConsumer<SelectJobLocationCubit, SelectJobLocationState>(
+              listener: (context, state) {},
+              builder: (context, state) {
+                return InkWell(
+                  onTap: () {
+                    countrySelection[index] = selectLocationCupit
+                        .selectLocation(countrySelection[index]);
+                    if ( countrySelection[index] == true){
+                      selectedCountriesList.add(countryName[index]);
+
+                    }
+                    else
+                      selectedCountriesList.remove(countryName[index]);
+                    print(selectedCountriesList);
+                  },
+                  child: Container(
+                    height: 7.h,
+                    width: 35.w,
+                    decoration: BoxDecoration(
+                        border: Border.all(
+                            color: countrySelection[index] == true
+                                ? AppTheme.primaryColor
+                                : AppTheme.grey),
+                        color: countrySelection[index] == true
+                            ? AppTheme.lightblue
+                            : AppTheme.lightGrey,
+                        borderRadius: BorderRadius.circular(100)),
+                    child: Row(
+                      children: [
+                        Image.asset(
+                          countryImg[index],
+                          height: 5.h,
+                        ),
+                        Text(countryName[index])
+                      ],
                     ),
                   ),
-                )
-            ],
+                );
+              },
+            );
+          },
+        ),
+        Padding(
+          padding: const EdgeInsets.symmetric(vertical: 8.0),
+          child: DefaultButton(
+            Onpressed: () => Navigator.pushNamed(
+                context, AppRoutes.RegisterSuccessPageRoute),
+            text: "Next",
+            Height: 7.h,
+            width: double.infinity,
+            clr: AppTheme.primaryColor,
           ),
-          Padding(
-            padding: const EdgeInsets.symmetric(vertical: 8.0),
-            child: DefaultButton(
-              Onpressed: () => Navigator.pushNamed(context, AppRoutes.RegisterSuccessPageRoute),
-              text: "Next",
-              Height: 7.h,
-              width: double.infinity,
-              clr: AppTheme.primaryColor,
-            ),
-          ),
-        ]),
-      ),
+        ),
+      ]),
     ));
   }
 }
+
+bool office = true, remote = false;
+bool? UnitedStates,
+    Malaysia,
+    Singapore,
+    Indonesia,
+    Philiphines,
+    Polandia,
+    India,
+    Vietnam,
+    China,
+    Canada,
+    SaudiArabia,
+    Argentina,
+    Brazil;
+
+List countrySelection = [
+  UnitedStates = false,
+  Malaysia = false,
+  Singapore = false,
+  Indonesia = false,
+  Philiphines = false,
+  Polandia = false,
+  India = false,
+  Vietnam = false,
+  China = false,
+  Canada = false,
+  SaudiArabia = false,
+  Argentina = false,
+  Brazil = false
+];
+
+List countryImg = [
+  Img.america,
+  Img.malisia,
+  Img.singaphor,
+  Img.indonisia,
+  Img.philipine,
+  Img.poland,
+  Img.india,
+  Img.vitnam,
+  Img.china,
+  Img.canada,
+  Img.saudia,
+  Img.argantine,
+  Img.brazil,
+];
+List countryName = [
+  'United States',
+  'Malaysia',
+  'Singapore',
+  'Indonesia',
+  'Philiphines',
+  'Polandia',
+  'India',
+  'Vietnam',
+  'China',
+  'Canada',
+  'Saudi Arabia',
+  'Argentina',
+  'Brazil',
+];
+List selectedCountriesList = [];

@@ -1,8 +1,8 @@
 import 'dart:math';
 
-import 'package:final_project/controller/constants/endpoints.dart';
+import 'package:final_project/controller/dio/endpoints.dart';
 import 'package:final_project/controller/dio/dio_helper.dart';
-import 'package:final_project/model/user_model.dart';
+import 'package:final_project/model/auth_models/user_login_model.dart';
 import 'package:final_project/view/pages/account/register/register_page.dart';
 import 'package:final_project/view_model/login_cubit/login_cubit.dart';
 import 'package:final_project/view_model/login_cubit/login_cubit.dart';
@@ -10,6 +10,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:sizer/sizer.dart';
 
@@ -28,8 +29,10 @@ class LoginPage extends StatefulWidget {
 
 class _LoginPageState extends State<LoginPage> {
   @override
-  TextEditingController passwordController = TextEditingController(text: "Ahmedyasser16");
-  TextEditingController loginNameController = TextEditingController(text: 'ahmedyasse@gmail.com');
+  TextEditingController passwordController = TextEditingController(
+      text: "Ahmedyasser16");
+  TextEditingController loginNameController = TextEditingController(
+      text: 'ahmedyasse@gmail.com');
 
   final loginFormKey = GlobalKey<FormState>();
   bool flag = true;
@@ -71,82 +74,76 @@ class _LoginPageState extends State<LoginPage> {
 
   @override
   Widget build(BuildContext context) {
-    return BlocConsumer<LoginCubit, LoginState>(
-      listener: (context, state) {
-        if(state is LoginLoadingState){
-           const CircularProgressIndicator();
-        }
-        else if( state is LoginSuccessState){
-          print("s");
-        }
-
-      },
-      builder: (context, state) {
-        final loginCubit = BlocProvider.of<LoginCubit>(context);
-        return Scaffold(
-          backgroundColor: Colors.white,
-          appBar: AppBar(
-            backgroundColor: Colors.transparent,
-            elevation: 0,
-            actions: [
-              Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 20.0),
-                child: Image.asset(
-                  Img.AppLogo,
-                  width: 25.w,
-                ),
-              )
-            ],
-          ),
-          body: Padding(
-            padding: const EdgeInsets.all(24.0),
-            child: ListView(
-              physics: const BouncingScrollPhysics(),
-              children: [
-                const Text(
-                  "Login",
-                  style: TextStyle(fontSize: 28, fontWeight: FontWeight.w500),
-                ),
-                const SizedBox(
-                  height: 8,
-                ),
-                const Text(
-                  "Please login to find your dream job",
-                  style: TextStyle(
-                      fontSize: 14,
-                      fontWeight: FontWeight.w400,
-                      color: AppTheme.grey),
-                ),
-                const SizedBox(
-                  height: 60,
-                ),
-                Form(
-                  key: loginFormKey,
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      const SizedBox(
-                        height: 20,
-                      ),
-                      DefaultFormField(
-                        obSecured: false,
-                        onChanged: (p0) {
-                          setState(() {});
-                        },
-                        controller: loginNameController,
-                        textInputAction: TextInputAction.next,
-                        keyboardType: TextInputType.name,
-                        prefixIcon: Icon(
-                          Icons.person_outline,
-                          size: 20.sp,
-                          color: AppTheme.primaryColor,
-                        ),
-                        hintText: 'Username',
-                      ),
-                      const SizedBox(
-                        height: 20,
-                      ),
-                      DefaultFormField(
+    final loginCubit = BlocProvider.of<LoginCubit>(context);
+    return Scaffold(
+      backgroundColor: Colors.white,
+      appBar: AppBar(
+        backgroundColor: Colors.transparent,
+        elevation: 0,
+        actions: [
+          Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 20.0),
+            child: Image.asset(
+              Img.AppLogo,
+              width: 25.w,
+            ),
+          )
+        ],
+      ),
+      body: Padding(
+        padding: const EdgeInsets.all(24.0),
+        child: ListView(
+          physics: const BouncingScrollPhysics(),
+          children: [
+            const Text(
+              "Login",
+              style: TextStyle(fontSize: 28, fontWeight: FontWeight.w500),
+            ),
+            const SizedBox(
+              height: 8,
+            ),
+            const Text(
+              "Please login to find your dream job",
+              style: TextStyle(
+                  fontSize: 14,
+                  fontWeight: FontWeight.w400,
+                  color: AppTheme.grey),
+            ),
+            const SizedBox(
+              height: 60,
+            ),
+            Form(
+              key: loginFormKey,
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  const SizedBox(
+                    height: 20,
+                  ),
+                  DefaultFormField(
+                    obSecured: false,
+                    onChanged: (p0) {
+                      setState(() {});
+                    },
+                    controller: loginNameController,
+                    textInputAction: TextInputAction.next,
+                    keyboardType: TextInputType.name,
+                    prefixIcon: Icon(
+                      Icons.person_outline,
+                      size: 20.sp,
+                      color: AppTheme.primaryColor,
+                    ),
+                    hintText: 'Username',
+                  ),
+                  const SizedBox(
+                    height: 20,
+                  ),
+                  BlocConsumer<LoginCubit, LoginState>(
+                    listener: (context, state) {
+                      // TODO: implement listener
+                    },
+                    builder: (context, state) {
+                      return DefaultFormField(
                         validator: (p0) {
                           if (p0 == null || p0.length < 8) {
                             return 'Password must be at least 8 characters';
@@ -173,155 +170,176 @@ class _LoginPageState extends State<LoginPage> {
                             },
                             icon: loginCubit.isSecured == true
                                 ? Icon(Icons.visibility_off,
-                                    size: 20.sp, color: AppTheme.primaryColor)
+                                size: 20.sp, color: AppTheme.primaryColor)
                                 : Icon(Icons.visibility,
-                                    size: 20.sp, color: AppTheme.primaryColor)),
-                      ),
-                      Row(
-                        children: [
-                          Checkbox(
-                            value: isChecked,
-                            onChanged: (bool? value) {
-                              setState(() {
-                                isChecked = value!;
-
-                                SharedPreferences.getInstance().then(
-                                  (prefs) {
-                                    prefs.setBool("remember_me", value);
-                                    prefs.setString(
-                                        'name', loginNameController.text);
-                                    prefs.setString(
-                                        'password', passwordController.text);
-                                  },
-                                );
-                              });
-                            },
-                          ),
-                          const Text(
-                            'Remember me? ',
-                            style: TextStyle(
-                              color: AppTheme.grey,
-                              fontSize: 14,
-                              fontWeight: FontWeight.w400,
-                            ),
-                          ),
-                          const Spacer(),
-                          TextButton(
-                              onPressed: () {
-                                Navigator.pushNamed(
-                                    context, AppRoutes.restPasswordPageRoute);
-                              },
-                              child: const Text(
-                                'Forgot Password',
-                                style: TextStyle(
-                                  color: AppTheme.primaryColor,
-                                  fontSize: 14,
-                                  fontWeight: FontWeight.w400,
-                                ),
-                              ))
-                        ],
-                      )
-                    ],
+                                size: 20.sp, color: AppTheme.primaryColor)),
+                      );
+                    },
                   ),
-                ),
-                SizedBox(
-                  height: 15.h,
-                ),
-                Center(
-                  child: RichText(
-                    text: TextSpan(
-                        text: 'Dont’t have an account? ',
-                        style: const TextStyle(
+                  Row(
+                    children: [
+                      Checkbox(
+                        value: isChecked,
+                        onChanged: (bool? value) {
+                          setState(() {
+                            isChecked = value!;
+
+                            SharedPreferences.getInstance().then(
+                                  (prefs) {
+                                prefs.setBool("remember_me", value);
+                                prefs.setString(
+                                    'name', loginNameController.text);
+                                prefs.setString(
+                                    'password', passwordController.text);
+                              },
+                            );
+                          });
+                        },
+                      ),
+                      const Text(
+                        'Remember me? ',
+                        style: TextStyle(
                           color: AppTheme.grey,
                           fontSize: 14,
                           fontWeight: FontWeight.w400,
                         ),
-                        children: <TextSpan>[
-                          TextSpan(
-                              text: 'Register',
-                              style: const TextStyle(
-                                color: AppTheme.primaryColor,
-                                fontSize: 14,
-                                fontWeight: FontWeight.w400,
-                              ),
-                              recognizer: TapGestureRecognizer()
-                                ..onTap = () {
-                                  Navigator.pushNamedAndRemoveUntil(
-                                      context,
-                                      AppRoutes.registerPageRoute,
+                      ),
+                      const Spacer(),
+                      TextButton(
+                          onPressed: () {
+                            Navigator.pushNamed(
+                                context, AppRoutes.restPasswordPageRoute);
+                          },
+                          child: const Text(
+                            'Forgot Password',
+                            style: TextStyle(
+                              color: AppTheme.primaryColor,
+                              fontSize: 14,
+                              fontWeight: FontWeight.w400,
+                            ),
+                          ))
+                    ],
+                  )
+                ],
+              ),
+            ),
+            SizedBox(
+              height: 15.h,
+            ),
+            Center(
+              child: RichText(
+                text: TextSpan(
+                    text: 'Dont’t have an account? ',
+                    style: const TextStyle(
+                      color: AppTheme.grey,
+                      fontSize: 14,
+                      fontWeight: FontWeight.w400,
+                    ),
+                    children: <TextSpan>[
+                      TextSpan(
+                          text: 'Register',
+                          style: const TextStyle(
+                            color: AppTheme.primaryColor,
+                            fontSize: 14,
+                            fontWeight: FontWeight.w400,
+                          ),
+                          recognizer: TapGestureRecognizer()
+                            ..onTap = () {
+                              Navigator.pushNamedAndRemoveUntil(
+                                  context,
+                                  AppRoutes.registerPageRoute,
                                       (route) => false);
-                                  // navigate to desired screen
-                                })
-                        ]),
-                  ),
-                ),
-                SizedBox(
-                  height: 2.h,
-                ),
-                DefaultButton(
+                              // navigate to desired screen
+                            })
+                    ]),
+              ),
+            ),
+            SizedBox(
+              height: 2.h,
+            ),
+            BlocConsumer<LoginCubit, LoginState>(
+              listener: ((context, state) {
+                              }),
+              builder: (context, state) {
+                if (state is LoginLoadingState) {
+                  return const Center(child: CircularProgressIndicator());
+                }
+                else if (state is LoginErrorState) {
+                  Fluttertoast.showToast(
+                      msg: "Wrong Email or password",
+                      toastLength: Toast.LENGTH_SHORT,
+                      gravity: ToastGravity.BOTTOM,
+                      timeInSecForIosWeb: 1,
+                      backgroundColor: Colors.red,
+                      textColor: Colors.white,
+                      fontSize: 16.0
+                  );
+                }
+                return DefaultButton(
                     Onpressed: flag == false
                         ? () {}
                         : () {
-                      loginCubit.userLogin(email: loginNameController.text, password: passwordController.text);
-                            // if (loginFormKey.currentState!.validate()) {
-                            //   userLogin(loginNameController.text, passwordController.text);
-                            //   // Navigator.pushNamed(
-                              //     context, AppRoutes.homePageRoute);
-                            // }
-                          },
+                            loginCubit.userLogin(
+                                email: loginNameController.text,
+                                password: passwordController.text);
+                            if (state is LoginSuccessState) {
+                              Navigator.pushNamed(
+                                  context, AppRoutes.homePageRoute);
+                            }
+                    },
                     text: 'Login',
                     clr: changeButtonColor(loginNameController.text,
-                                passwordController.text) ==
-                            true
+                        passwordController.text) ==
+                        true
                         ? AppTheme.primaryColor
                         : AppTheme.grey,
                     Height: 7.h,
-                    width: 90.w),
-                SizedBox(
-                  height: 2.h,
+                    width: 90.w);
+              },
+            ),
+            SizedBox(
+              height: 2.h,
+            ),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: const [
+                Expanded(
+                  child: Divider(
+                    color: AppTheme.grey,
+                    thickness: 1,
+                    endIndent: 20,
+                  ),
                 ),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: const [
-                    Expanded(
-                      child: Divider(
-                        color: AppTheme.grey,
-                        thickness: 1,
-                        endIndent: 20,
-                      ),
-                    ),
-                    Text("Or Login With Account",
-                        style: TextStyle(
-                            fontSize: 14,
-                            fontWeight: FontWeight.w400,
-                            color: AppTheme.grey)),
-                    Expanded(
-                      child: Divider(
-                        color: AppTheme.grey,
-                        thickness: 1,
-                        indent: 20,
-                      ),
-                    ),
-                  ],
-                ),
-                SizedBox(
-                  height: 2.h,
-                ),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    Image.asset(
-                      Img.google,
-                      width: 40.w,
-                    ),
-                    Image.asset(Img.facebook, width: 40.w),
-                  ],
+                Text("Or Login With Account",
+                    style: TextStyle(
+                        fontSize: 14,
+                        fontWeight: FontWeight.w400,
+                        color: AppTheme.grey)),
+                Expanded(
+                  child: Divider(
+                    color: AppTheme.grey,
+                    thickness: 1,
+                    indent: 20,
+                  ),
                 ),
               ],
             ),
-          ),
-        );
-      },
+            SizedBox(
+              height: 2.h,
+            ),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Image.asset(
+                  Img.google,
+                  width: 40.w,
+                ),
+                Image.asset(Img.facebook, width: 40.w),
+              ],
+            ),
+          ],
+        ),
+      ),
     );
   }
 

@@ -6,14 +6,14 @@ class Img {
   static const String boarding3 = 'assets/Background.png';
   static const String google = 'assets/g.png';
   static const String facebook = 'assets/f.png';
-  static const String developer = 'assets/Developer.png';
-  static const String ilustratorDesigner = 'assets/Ilustrator Designer.png';
+  static const String developer = 'assets/code.png';
+  static const String ilustratorDesigner = 'assets/pen-tool-2.png';
   static const String InformationTechnologi =
-      'assets/Information Technologi.png';
+      'assets/monitor-mobbile.png';
   static const String ResearchandAnalytics =
-      'assets/Research and Analytics.png';
-  static const String Management = 'assets/Management.png';
-  static const String UXDesign = 'assets/UX Design.png';
+      'assets/cloud-add.png';
+  static const String Management = 'assets/graph.png';
+  static const String UXDesign = 'assets/bezier.png';
   static const String america = 'assets/america.png';
   static const String brazil = 'assets/brazil.png';
   static const String canada = 'assets/canada.png';
@@ -40,6 +40,4 @@ class Img {
   static const String Twitter = 'assets/A.png';
   static const String Gojek = 'assets/B.png';
   static const String Dana = 'assets/C.png';
-
-
 }
