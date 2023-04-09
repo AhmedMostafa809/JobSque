@@ -1,4 +1,7 @@
 import 'package:bloc/bloc.dart';
+import 'package:final_project/controller/dio/dio_helper.dart';
+import 'package:final_project/controller/dio/endpoints.dart';
+import 'package:final_project/model/auth_models/select_job_model.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:meta/meta.dart';
 
@@ -11,73 +14,7 @@ class SelectJobLocationCubit extends Cubit<SelectJobLocationState> {
 
   static SelectJobLocationCubit get(context) => BlocProvider.of(context);
 
-  // List<Map> countries = [
-  //   {
-  //     'image': Img.america,
-  //     'name': 'United States',
-  //     'selected': false,
-  //   },
-  //   {
-  //     'image': Img.malisia,
-  //     'name': 'Malaysia',
-  //     'selected': false,
-  //   },
-  //   {
-  //     'image': Img.singaphor,
-  //     'name': 'Singapore',
-  //     'selected': false,
-  //   },
-  //   {
-  //     'image': Img.indonisia,
-  //     'name': 'Indonesia',
-  //     'selected': false,
-  //   },
-  //   {
-  //     'image': Img.philipine,
-  //     'name': 'Philiphines',
-  //     'selected': false,
-  //   },
-  //   {
-  //     'image': Img.poland,
-  //     'name': 'Polandia',
-  //     'selected': false,
-  //   },
-  //   {
-  //     'image': Img.india,
-  //     'name': 'India',
-  //     'selected': false,
-  //   },
-  //   {
-  //     'image': Img.vitnam,
-  //     'name': 'Vietnam',
-  //     'selected': false,
-  //   },
-  //   {
-  //     'image': Img.china,
-  //     'name': 'China',
-  //     'selected': false,
-  //   },
-  //   {
-  //     'image': Img.canada,
-  //     'name': 'Canada',
-  //     'selected': false,
-  //   },
-  //   {
-  //     'image': Img.saudia,
-  //     'name': 'Saudi Arabia',
-  //     'selected': false,
-  //   },
-  //   {
-  //     'image': Img.argantine,
-  //     'name': 'Argentina',
-  //     'selected': false,
-  //   },
-  //   {
-  //     'image': Img.brazil,
-  //     'name': 'Brazil',
-  //     'selected': false,
-  //   },
-  // ];
+  SelectJobModel selectJobModel = SelectJobModel();
 
   bool selectLocation(bool isSelected) {
     if (isSelected == true) {
@@ -112,11 +49,30 @@ class SelectJobLocationCubit extends Cubit<SelectJobLocationState> {
     emit(SetRemoteState());
     return away;
   }
-  bool returnFalse(bool f){
+
+  bool returnFalse(bool f) {
     f = false;
     return f;
   }
 
-
-
+  void submitJobs(String selectedJobFromList, String officeJobLocations,
+      String remoteJobLocations, String token, int id) {
+    emit(SubmitJobLoadingState());
+    DioHelper.putData(
+            endPoint: "${EndPoint.selectJobUrl}/$id}",
+            data: {
+              "intersted_work": selectedJobFromList,
+              "offline_place": officeJobLocations,
+              "remote_place": remoteJobLocations
+            },
+            token: token,
+           )
+        .then((value) {
+      selectJobModel = SelectJobModel.fromJson(value.data);
+      print("selected jobs from cubit ::  ${value.data}     :: Done");
+      emit(SubmitJobSuccessState());
+    }).catchError((error) {
+      emit(SubmitJobErrorStates());
+    });
+  }
 }

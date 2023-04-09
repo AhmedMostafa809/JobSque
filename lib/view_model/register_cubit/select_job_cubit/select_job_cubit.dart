@@ -14,6 +14,7 @@ class SelectJobCubit extends Cubit<SelectJobState> {
   bool management = false;
   bool informationTechnology = false;
   bool researchAnalytics = false;
+
   List selectedJobsList = [];
 
   void selectUIUXDesigner() {

@@ -68,7 +68,7 @@ class MyApp extends StatelessWidget {
         // theme: cubit.isDarkTheme? Themes.darkTheme:Themes.lightTheme,
         // home: SplashScreen(),
         debugShowCheckedModeBanner: false,
-        initialRoute: AppRoutes.jobsPageRoute,
+        initialRoute: AppRoutes.registerPageRoute,
         onGenerateRoute: onGenerate,
 
       );

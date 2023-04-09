@@ -120,7 +120,7 @@ class JobsPage extends StatelessWidget {
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
           Padding(
-            padding: EdgeInsets.symmetric(vertical: 8.0),
+            padding: const EdgeInsets.symmetric(vertical: 8.0),
             child: DefaultButton(
               Onpressed: () =>
                   Navigator.pushNamed(context, AppRoutes.locationPageRoute),

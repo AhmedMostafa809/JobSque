@@ -1,3 +1,4 @@
+import 'package:final_project/controller/dio/endpoints.dart';
 import 'package:final_project/utilities/assets/app_assets.dart';
 import 'package:final_project/view_model/register_cubit/select_location/select_job_location_cubit.dart';
 import 'package:flutter/cupertino.dart';
@@ -6,9 +7,9 @@ import 'package:flutter/rendering.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:sizer/sizer.dart';
-
 import '../../../../utilities/route/routes.dart';
 import '../../../../utilities/theme/app_themes.dart';
+import '../../../../view_model/register_cubit/select_job_cubit/select_job_cubit.dart';
 import '../../../widgets/default_button.dart';
 
 class LocationPage extends StatelessWidget {
@@ -16,6 +17,7 @@ class LocationPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final selectJobCubit = BlocProvider.of<SelectJobCubit>(context);
     final selectLocationCupit = BlocProvider.of<SelectJobLocationCubit>(context);
     return Scaffold(
         body: Padding(
@@ -64,34 +66,34 @@ class LocationPage extends StatelessWidget {
                     shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(30)),
                     child: Text(
-                  'Work From Office',
-                  style: TextStyle(
-                      color: office == true ? Colors.white : AppTheme.grey),
-                ),
-              ),
-              const Spacer(),
-              MaterialButton(
-                onPressed: () {
-                  remote = selectLocationCupit.setRemoteJobs(remote);
-                  office = selectLocationCupit.returnFalse(office);
-                  },
-                height: 7.h,
-                minWidth: 40.w,
-                color:
-                    remote == true ? AppTheme.darkBlue : AppTheme.lightGrey,
-                elevation: 0,
-                shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(30)),
-                child: Text(
-                  'Remote Work',
-                  style: TextStyle(
-                      color: remote == true ? Colors.white : AppTheme.grey),
-                ),
-              ),
-            ],
-          );
-  },
-),
+                      'Work From Office',
+                      style: TextStyle(
+                          color: office == true ? Colors.white : AppTheme.grey),
+                    ),
+                  ),
+                  const Spacer(),
+                  MaterialButton(
+                    onPressed: () {
+                      remote = selectLocationCupit.setRemoteJobs(remote);
+                      office = selectLocationCupit.returnFalse(office);
+                    },
+                    height: 7.h,
+                    minWidth: 40.w,
+                    color:
+                        remote == true ? AppTheme.darkBlue : AppTheme.lightGrey,
+                    elevation: 0,
+                    shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(30)),
+                    child: Text(
+                      'Remote Work',
+                      style: TextStyle(
+                          color: remote == true ? Colors.white : AppTheme.grey),
+                    ),
+                  ),
+                ],
+              );
+            },
+          ),
         ),
         const SizedBox(
           height: 20,
@@ -123,12 +125,11 @@ class LocationPage extends StatelessWidget {
                   onTap: () {
                     countrySelection[index] = selectLocationCupit
                         .selectLocation(countrySelection[index]);
-                    if ( countrySelection[index] == true){
+                    if (countrySelection[index] == true) {
                       selectedCountriesList.add(countryName[index]);
-
-                    }
-                    else
+                    } else {
                       selectedCountriesList.remove(countryName[index]);
+                    }
                     print(selectedCountriesList);
                   },
                   child: Container(
@@ -160,14 +161,36 @@ class LocationPage extends StatelessWidget {
         ),
         Padding(
           padding: const EdgeInsets.symmetric(vertical: 8.0),
-          child: DefaultButton(
-            Onpressed: () => Navigator.pushNamed(
-                context, AppRoutes.RegisterSuccessPageRoute),
+          child: BlocConsumer<SelectJobLocationCubit, SelectJobLocationState>(
+            listener: (context, state) {
+              if(state is SubmitJobSuccessState){
+                Navigator.pushNamed(context, AppRoutes.RegisterSuccessPageRoute);
+              }
+            },
+            builder: (context, state) {
+              return DefaultButton(
+                Onpressed: () {
+                  String interWork = selectJobCubit.selectedJobsList.join(",");
+                  if (office == true && remote == false) {
+                    officeJobsList = selectedCountriesList;
+                    String offlineLocations = officeJobsList.join(",");
+                    remoteJobsList = [];
+                    selectLocationCupit.submitJobs(interWork, offlineLocations, "Null", EndPoint.userToken, EndPoint.id);
+                  }
+                  else if (remote == true && office == false) {
+                    remoteJobsList = selectedCountriesList;
+                    String remoteLocations = remoteJobsList.join(",");
+                    officeJobsList = [];
+                    selectLocationCupit.submitJobs(interWork, "Null", remoteLocations, EndPoint.userToken, EndPoint.id);
+                  }
+                   },
             text: "Next",
             Height: 7.h,
             width: double.infinity,
             clr: AppTheme.primaryColor,
-          ),
+          );
+  },
+),
         ),
       ]),
     ));
@@ -236,3 +259,5 @@ List countryName = [
   'Brazil',
 ];
 List selectedCountriesList = [];
+List officeJobsList = [];
+List remoteJobsList = [];
