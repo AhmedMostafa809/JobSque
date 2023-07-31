@@ -1,10 +1,4 @@
-import 'dart:math';
 
-import 'package:final_project/controller/dio/endpoints.dart';
-import 'package:final_project/controller/dio/dio_helper.dart';
-import 'package:final_project/model/auth_models/user_login_model.dart';
-import 'package:final_project/view/pages/account/register/register_page.dart';
-import 'package:final_project/view_model/login_cubit/login_cubit.dart';
 import 'package:final_project/view_model/login_cubit/login_cubit.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/gestures.dart';
@@ -13,7 +7,6 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:sizer/sizer.dart';
-
 import '../../../utilities/assets/app_assets.dart';
 import '../../../utilities/route/routes.dart';
 import '../../../utilities/theme/app_themes.dart';
@@ -28,11 +21,8 @@ class LoginPage extends StatefulWidget {
 }
 
 class _LoginPageState extends State<LoginPage> {
-  @override
-  TextEditingController passwordController = TextEditingController(
-      text: "Ahmedyasser16");
-  TextEditingController loginNameController = TextEditingController(
-      text: 'ahmedyasse@gmail.com');
+  TextEditingController passwordController = TextEditingController();
+  TextEditingController loginNameController = TextEditingController();
 
   final loginFormKey = GlobalKey<FormState>();
   bool flag = true;
@@ -229,7 +219,7 @@ class _LoginPageState extends State<LoginPage> {
             Center(
               child: RichText(
                 text: TextSpan(
-                    text: 'Dont’t have an account? ',
+                    text: 'Don’t have an account? ',
                     style: const TextStyle(
                       color: AppTheme.grey,
                       fontSize: 14,
@@ -259,10 +249,15 @@ class _LoginPageState extends State<LoginPage> {
             ),
             BlocConsumer<LoginCubit, LoginState>(
               listener: ((context, state) {
+                if (state is LoginSuccessState) {
+                  Navigator.pushNamed(
+                      context, AppRoutes.layoutRoute);
+                }
                               }),
               builder: (context, state) {
-                if (state is LoginLoadingState) {
+                if (state is LoginLoadingState){
                   return const Center(child: CircularProgressIndicator());
+
                 }
                 else if (state is LoginErrorState) {
                   Fluttertoast.showToast(
@@ -275,27 +270,27 @@ class _LoginPageState extends State<LoginPage> {
                       fontSize: 16.0
                   );
                 }
-                return DefaultButton(
-                    Onpressed: flag == false
-                        ? () {}
-                        : () {
-                            loginCubit.userLogin(
-                                email: loginNameController.text,
-                                password: passwordController.text);
-                            if (state is LoginSuccessState) {
-                              Navigator.pushNamed(
-                                  context, AppRoutes.homePageRoute);
-                            }
-                    },
-                    text: 'Login',
-                    clr: changeButtonColor(loginNameController.text,
-                        passwordController.text) ==
-                        true
-                        ? AppTheme.primaryColor
-                        : AppTheme.grey,
-                    Height: 7.h,
-                    width: 90.w);
-              },
+                  return DefaultButton(
+                      Onpressed: flag == false
+                          ? () {}
+                          : () {
+                              loginCubit.userLogin(
+                                  email: loginNameController.text,
+                                  password: passwordController.text);
+                              // if (state is LoginSuccessState) {
+                              //
+                              // }
+                            },
+                      text: 'Login',
+                      clr: changeButtonColor(loginNameController.text,
+                                  passwordController.text) ==
+                              true
+                          ? AppTheme.primaryColor
+                          : AppTheme.grey,
+                      Height: 7.h,
+                      width: 90.w);
+                }
+
             ),
             SizedBox(
               height: 2.h,

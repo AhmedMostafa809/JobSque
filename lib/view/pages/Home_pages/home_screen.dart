@@ -1,12 +1,10 @@
 import 'package:final_project/utilities/route/routes.dart';
-import 'package:final_project/view/pages/Home_pages/apply_job/job_details.dart';
 import 'package:final_project/view/widgets/recent_jobs_card.dart';
 import 'package:final_project/view/widgets/suggested_job_card.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/rendering.dart';
 import 'package:sizer/sizer.dart';
 
+import '../../../utilities/cashe_helper.dart';
 import '../../../utilities/search_delegate.dart';
 import '../../../utilities/theme/app_themes.dart';
 
@@ -22,9 +20,9 @@ bool saved = false;
 
 
 class _HomePageState extends State<HomePage> {
-
   @override
   Widget build(BuildContext context) {
+    String name = CacheManager.getData("name");
     return SafeArea(
       child: Scaffold(
         backgroundColor: Colors.white,
@@ -38,13 +36,13 @@ class _HomePageState extends State<HomePage> {
                   children: [
                     Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
-                      children: const [
+                      children:  [
                         Text(
-                          "Hi, Rafif Dian👋",
-                          style: TextStyle(
+                          "Hi ${name}👋",
+                          style: const TextStyle(
                               fontSize: 28, fontWeight: FontWeight.w500),
                         ),
-                        Text(
+                        const Text(
                           "Create a better future for yourself here",
                           style: TextStyle(
                               fontSize: 14,

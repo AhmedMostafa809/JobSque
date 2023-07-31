@@ -58,7 +58,7 @@ class RegisterSuccessPage extends StatelessWidget {
           Padding(
             padding: const EdgeInsets.all(8.0),
             child: DefaultButton(
-              Onpressed: () => Navigator.pushNamedAndRemoveUntil(context, AppRoutes.homePageRoute, (route) => false),
+              Onpressed: () => Navigator.pushNamedAndRemoveUntil(context, AppRoutes.layoutRoute, (route) => false),
               text: "Get Started",
               Height: 7.h,
               width: 90.w,

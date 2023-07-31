@@ -7,20 +7,26 @@ import 'package:final_project/utilities/route/routes.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
+import 'account/login_page.dart';
 import 'onboarding.dart';
 
 class SplashScreen extends StatefulWidget {
-  const SplashScreen({Key? key}) : super(key: key);
+
+  String? email,password,token;
+  SplashScreen({Key? key,required this.email,required this.password,required this.token,}) : super(key: key);
 
   @override
   _SplashScreenState createState() => _SplashScreenState();
 }
-
 class _SplashScreenState extends State<SplashScreen> {
 
   void initState(){
     super.initState();
-    Timer(const Duration(seconds:3), ()=>Navigator.pushReplacementNamed(context, AppRoutes.onBoardingRoute,));
+    String secondScreen = AppRoutes.loginRoute;
+    if(widget.email!= null &&widget.password!= null&&widget.token!= null){
+      secondScreen = AppRoutes.layoutRoute;
+    }
+    Timer(const Duration(seconds:3), ()=>Navigator.pushReplacementNamed(context, secondScreen,));
   }
 
   @override

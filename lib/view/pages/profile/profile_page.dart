@@ -1,14 +1,19 @@
 import 'package:final_project/utilities/route/routes.dart';
 import 'package:final_project/utilities/theme/app_themes.dart';
+import 'package:final_project/view/pages/account/login_page.dart';
 import 'package:final_project/view/widgets/profile_listTile.dart';
 import 'package:flutter/material.dart';
 import 'package:sizer/sizer.dart';
+
+import '../../../controller/dio/endpoints.dart';
+import '../../../utilities/cashe_helper.dart';
 
 class ProfilePage extends StatelessWidget {
   const ProfilePage({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
+    String name = CacheManager.getData("name");
     return SafeArea(
       child: Scaffold(
         body: ListView(
@@ -18,12 +23,39 @@ class ProfilePage extends StatelessWidget {
               padding: EdgeInsets.symmetric(vertical: 2.h),
               color: AppTheme.profileLightColor,
               width: double.infinity,
-              height: 7.h ,
-              child:const Center(
-                child: Text(
-                  'Profile',
-                  style: TextStyle(fontSize:20,color: Colors.black87, fontWeight: FontWeight.w500),
-                ),
+              height: 7.h,
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  const Spacer(),
+                  SizedBox(width: 12.w,),
+                  const Text(
+                    'Profile',
+                    style: TextStyle(
+                        fontSize: 20,
+                        color: Colors.black87,
+                        fontWeight: FontWeight.w500),
+                  ),
+
+                  const Spacer(),
+                  IconButton(
+                      onPressed: () {
+                        CacheManager.removeData("email");
+                        CacheManager.removeData("password");
+                        CacheManager.removeData("token");
+                        CacheManager.removeData("name");
+                        Navigator.pushAndRemoveUntil(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) => LoginPage(),
+                            ),
+                            (route) => false);
+                      },
+                      icon: const Icon(
+                        Icons.logout,
+                        color: Colors.red,
+                      ))
+                ],
               ),
             ),
             Container(
@@ -43,17 +75,19 @@ class ProfilePage extends StatelessWidget {
                 ),
               ),
             ),
-            SizedBox(height: 7.h,),
+            SizedBox(
+              height: 7.h,
+            ),
             Column(
-              children: const [
+              children: [
                 Text(
-                  "Rafif Dian Axelingga",
-                  style: TextStyle(
+                  name,
+                  style: const TextStyle(
                       fontSize: 21,
                       fontWeight: FontWeight.w500,
                       color: Colors.black87),
                 ),
-                Text(
+                const Text(
                   "Senior UI/UX Designer",
                   style: TextStyle(
                       fontSize: 12,
@@ -62,7 +96,9 @@ class ProfilePage extends StatelessWidget {
                 ),
               ],
             ),
-            SizedBox(height: 3.h,),
+            SizedBox(
+              height: 3.h,
+            ),
             Padding(
               padding: EdgeInsets.symmetric(horizontal: 5.w),
               child: Column(
@@ -93,7 +129,7 @@ class ProfilePage extends StatelessWidget {
                               ),
                             ],
                           ),
-                           const VerticalDivider(
+                          const VerticalDivider(
                             thickness: 1,
                             indent: 10,
                             endIndent: 10,
@@ -118,11 +154,11 @@ class ProfilePage extends StatelessWidget {
                               ),
                             ],
                           ),
-                           const VerticalDivider(
-                             thickness: 1,
-                             indent: 10,
-                             endIndent: 10,
-                             color: Colors.grey,
+                          const VerticalDivider(
+                            thickness: 1,
+                            indent: 10,
+                            endIndent: 10,
+                            color: Colors.grey,
                           ),
                           Column(
                             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
@@ -147,9 +183,11 @@ class ProfilePage extends StatelessWidget {
                       ),
                     ),
                   ),
-                  SizedBox(height: 3.h,),
+                  SizedBox(
+                    height: 3.h,
+                  ),
                   Row(
-                    children:const  [
+                    children: const [
                       Text(
                         "About",
                         style: TextStyle(
@@ -167,9 +205,10 @@ class ProfilePage extends StatelessWidget {
                       ),
                     ],
                   ),
-                  SizedBox(height: 1.h,),
+                  SizedBox(
+                    height: 1.h,
+                  ),
                   Container(
-
                     height: 15.h,
                     child: const Text(
                       'Im Rafif Dian Axelingga, I’m UI/UX Designer, '
@@ -183,7 +222,6 @@ class ProfilePage extends StatelessWidget {
                           color: AppTheme.darkGrey),
                     ),
                   ),
-
                 ],
               ),
             ),
@@ -199,23 +237,43 @@ class ProfilePage extends StatelessWidget {
                 ),
               ),
             ),
-            SizedBox(height: 3.h,),
-            ProfileListTile(title: 'Edit Profile', onTap: (){
-              Navigator.pushNamed(context, AppRoutes.editProfilePageRoute);
-            }, icon: Icons.person_outline),
-            ProfileListTile(title: 'Portfolio', onTap: (){
-              Navigator.pushNamed(context, AppRoutes.portfolioPageRoute);
-            }, icon: Icons.camera_alt_outlined),
-            ProfileListTile(title: 'Language', onTap: (){
-              Navigator.pushNamed(context, AppRoutes.languagePageRoute);
-            }, icon: Icons.language),
-            ProfileListTile(title: 'Notification', onTap: (){
-              Navigator.pushNamed(context, AppRoutes.profileNotificationsPageRoute);
-            }, icon: Icons.notifications_none),
-            ProfileListTile(title: 'Login and security', onTap: (){
-              Navigator.pushNamed(context, AppRoutes.loginAndSecurityRoute);
-            }, icon: Icons.lock_outline),
-            SizedBox(height: 3.h,),
+            SizedBox(
+              height: 3.h,
+            ),
+            ProfileListTile(
+                title: 'Edit Profile',
+                onTap: () {
+                  Navigator.pushNamed(context, AppRoutes.editProfilePageRoute);
+                },
+                icon: Icons.person_outline),
+            ProfileListTile(
+                title: 'Portfolio',
+                onTap: () {
+                  Navigator.pushNamed(context, AppRoutes.portfolioPageRoute);
+                },
+                icon: Icons.camera_alt_outlined),
+            ProfileListTile(
+                title: 'Language',
+                onTap: () {
+                  Navigator.pushNamed(context, AppRoutes.languagePageRoute);
+                },
+                icon: Icons.language),
+            ProfileListTile(
+                title: 'Notification',
+                onTap: () {
+                  Navigator.pushNamed(
+                      context, AppRoutes.profileNotificationsPageRoute);
+                },
+                icon: Icons.notifications_none),
+            ProfileListTile(
+                title: 'Login and security',
+                onTap: () {
+                  Navigator.pushNamed(context, AppRoutes.loginAndSecurityRoute);
+                },
+                icon: Icons.lock_outline),
+            SizedBox(
+              height: 3.h,
+            ),
             Container(
               width: double.infinity,
               height: 4.h,
@@ -228,34 +286,35 @@ class ProfilePage extends StatelessWidget {
                 ),
               ),
             ),
-            SizedBox(height: 3.h,),
+            SizedBox(
+              height: 3.h,
+            ),
             ListTile(
               title: const Text('Accesibility'),
-              onTap: (){},
+              onTap: () {},
               trailing: const Icon(Icons.arrow_forward),
             ),
             ListTile(
               title: const Text('Help Center'),
-              onTap: (){
+              onTap: () {
                 Navigator.pushNamed(context, AppRoutes.helpCenterPageRoute);
               },
               trailing: const Icon(Icons.arrow_forward),
             ),
             ListTile(
               title: const Text('Terms & Conditions'),
-              onTap: (){
+              onTap: () {
                 Navigator.pushNamed(context, AppRoutes.termsAndConditionsRoute);
               },
               trailing: const Icon(Icons.arrow_forward),
             ),
             ListTile(
               title: const Text('Privacy Policy'),
-              onTap: (){
+              onTap: () {
                 Navigator.pushNamed(context, AppRoutes.privacyPolicyPageRoute);
               },
               trailing: const Icon(Icons.arrow_forward),
             ),
-
           ],
         ),
       ),

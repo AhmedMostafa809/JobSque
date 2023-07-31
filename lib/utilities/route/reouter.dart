@@ -32,8 +32,12 @@ import '../../view/pages/splach_page.dart';
 Route<dynamic> onGenerate(RouteSettings routeSettings) {
   switch (routeSettings.name) {
     case AppRoutes.splashPageRoute:
+      final String email = routeSettings.arguments as String;
+      final String password = routeSettings.arguments as String;
+      final String token = routeSettings.arguments as String;
+
       return MaterialPageRoute(
-          builder: (context) => const SplashScreen(), settings: routeSettings);
+          builder: (context) =>  SplashScreen(email: email,password: password,token: token,), settings: routeSettings);
     case AppRoutes.layoutRoute:
       return MaterialPageRoute(
           builder: (context) => const LayOut(), settings: routeSettings);

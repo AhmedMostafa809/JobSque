@@ -7,11 +7,14 @@ import 'package:final_project/controller/dio/dio_helper.dart';
 import 'package:final_project/model/auth_models/user_login_model.dart';
 import 'package:final_project/model/auth_models/user_register_model.dart';
 import 'package:final_project/utilities/theme/app_themes.dart';
+import 'package:final_project/view_model/login_cubit/login_cubit.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:meta/meta.dart';
+
+import '../../utilities/cashe_helper.dart';
 
 part 'register_state.dart';
 
@@ -19,7 +22,7 @@ class RegisterCubit extends Cubit<RegisterState> {
   RegisterCubit() : super(RegisterInitial());
 
   static RegisterCubit get(context) => BlocProvider.of(context);
-
+  static int registerId = 0;
   bool isSecured = true;
   RegisterModel registerModel = RegisterModel();
 
@@ -42,8 +45,14 @@ class RegisterCubit extends Cubit<RegisterState> {
               registerModel = RegisterModel.fromJson(value.data);
               EndPoint.userToken = registerModel.token!;
               if (registerModel.token != null) {
-                EndPoint.id = registerModel.profile!.id!;
-                print(' token is ${EndPoint.userToken} , id is ${EndPoint.id}');
+               LoginCubit.loginId = EndPoint.id = registerModel.profile!.id!;
+               EndPoint.name = registerModel.data!.name!;
+               CacheManager.saveData("name", EndPoint.name);
+               CacheManager.saveData("email", email);
+               CacheManager.saveData("password", password);
+               CacheManager.saveData("token", EndPoint.userToken);
+
+               print(' token is ${EndPoint.userToken} , id is ${EndPoint.id}');
                 emit(RegisterSuccessState());
               }
               // else if (registerModel.token == null) {

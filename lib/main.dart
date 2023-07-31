@@ -1,11 +1,14 @@
 import 'package:final_project/controller/dio/dio_helper.dart';
 import 'package:final_project/controller/local/shared_prefrences.dart';
 import 'package:final_project/firebase_options.dart';
+import 'package:final_project/utilities/cashe_helper.dart';
 import 'package:final_project/utilities/route/reouter.dart';
 import 'package:final_project/utilities/route/routes.dart';
 import 'package:final_project/utilities/theme/theme.dart';
+import 'package:final_project/view/pages/Home_pages/Layout.dart';
 import 'package:final_project/view/pages/splach_page.dart';
 import 'package:final_project/view_model/login_cubit/login_cubit.dart';
+import 'package:final_project/view_model/profile_cubit/get_profile_cubit.dart';
 import 'package:final_project/view_model/register_cubit/register_cubit.dart';
 import 'package:final_project/view_model/register_cubit/select_job_cubit/select_job_cubit.dart';
 import 'package:final_project/view_model/register_cubit/select_location/select_job_location_cubit.dart';
@@ -24,19 +27,14 @@ void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   Bloc.observer = MyBlocObserver();
   DioHelper.init();
-  // await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
-  // await MyCache.init();
-  // runApp(MultiBlocProvider(
-  //     providers: [
-  //       // BlocProvider(create: (_) => ThemeCubit())
-  //     ],
-  //     child:
+  await CacheManager.init();
+  String? email,password,token;
+  if(CacheManager.getData("email")!=null){
+    email = await CacheManager.getData("email");
+    password = await CacheManager.getData("password");
+    token = await CacheManager.getData("token");
 
-
-  // final prefs =await SharedPreferences.getInstance();
-  // final ShowOnBoarding = prefs.getBool('ShowOnBoarding') ?? true;
-
-
+  }
   SystemChrome.setPreferredOrientations([
     DeviceOrientation.portraitUp,
     DeviceOrientation.portraitDown,
@@ -46,31 +44,25 @@ void main() async {
         BlocProvider(create: (_) => RegisterCubit()),
         BlocProvider(create: (_) => SelectJobCubit()),
         BlocProvider(create: (_) => SelectJobLocationCubit()),
+        BlocProvider(create: (_) => GetProfileCubit()),
+
       ],
-      child: const MyApp())));
-  // )
-  // );
+      child:  MyApp(email: email,password: password,token: token,))));
+
 }
 
 class MyApp extends StatelessWidget {
-  const MyApp({super.key});
+  String? email,password,token;
+  MyApp({super.key,required this.email,required this.password
+    ,required this.token,});
 
-  // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
-    // return
-    // BlocBuilder<ThemeCubit, ThemeState>(
-    //   builder: (context, state) {
-    //     ThemeCubit cubit =ThemeCubit.get(context);
-    //     cubit.getTheme();
     return Sizer(builder: (context, orientation, deviceType) {
-      return const MaterialApp(
-        // theme: cubit.isDarkTheme? Themes.darkTheme:Themes.lightTheme,
-        // home: SplashScreen(),
+      return MaterialApp(
         debugShowCheckedModeBanner: false,
-        initialRoute: AppRoutes.registerPageRoute,
         onGenerateRoute: onGenerate,
-
+        home: SplashScreen(email: email,password: password,token: token,),
       );
     });
 

@@ -4,7 +4,7 @@ import 'endpoints.dart';
 
 class DioHelper {
   static Dio? dio;
-  static String baseUrl = 'http://134.209.132.80/api/';
+  static String baseUrl = 'https://project2.amit-learning.com/api/';
 
   static void init() {
     dio = Dio(

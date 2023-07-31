@@ -23,9 +23,9 @@ class RegisterPage extends StatefulWidget {
 }
 
 class _RegisterPageState extends State<RegisterPage> {
-  TextEditingController emailController = TextEditingController(text: 'ahmed@gmail.com');
-  TextEditingController passwordController = TextEditingController(text: '123456789');
-  TextEditingController nameController = TextEditingController(text: 'ahmed');
+  TextEditingController emailController = TextEditingController();
+  TextEditingController passwordController = TextEditingController();
+  TextEditingController nameController = TextEditingController();
   final formKey = GlobalKey<FormState>();
   late Color color;
 
